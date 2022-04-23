@@ -1,6 +1,6 @@
 # AXTN Discord Bot
 
-[![Build Status](https://github.com/github/opensource.guide/workflows/GitHub%20Actions%20CI/badge.svg)](https://github.com/le3ch-tech/cryptic-discord-bot/graphs/traffic)
+[![Build Status](https://github.com/github/opensource.guide/workflows/GitHub%20Actions%20CI/badge.svg)](https://github.com/AccessToken-Network/axtn-discord-bot/graphs/traffic)
 
 Official AXTN Discord Bot.
 
