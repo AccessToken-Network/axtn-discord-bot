@@ -10,4 +10,8 @@ AXTN Discord Server exclusive!
 
 ## For Issues: 
 
-[![Build Status](https://img.shields.io/github/issues/le3ch-tech/cryptic-discord-bot?label=Issues)](https://github.com/le3ch-tech/cryptic-discord-bot/issues)
+[![Build Status](https://img.shields.io/github/issues/le3ch-tech/cryptic-discord-bot?label=Issues)](https://github.com/AccessToken-Network/axtn-discord-bot/issues)
+
+## Changes:
+
+Last updated: 23/04/2022
