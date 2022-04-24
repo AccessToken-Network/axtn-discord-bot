@@ -26,4 +26,10 @@ client = discord.Client(intents=intents)
 _cout("AXTN: Configuration loaded")
 _cout("AXTN Awaiting Actions")
 
+#listener on on_ready
+@bot.event
+async def on_ready():
+	channel_sudo = bot.get_channel(856434834900254731)
+	await channel_sudo.send(f"ARKANET: Successfully Booted")
+
 
