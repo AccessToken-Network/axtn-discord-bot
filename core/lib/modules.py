@@ -46,3 +46,4 @@ def _modules():
 
 modules()
 print("Modules: Initialized")
+_sys("python3 ../core.py")
