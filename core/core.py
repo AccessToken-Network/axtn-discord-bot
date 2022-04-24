@@ -32,7 +32,10 @@ _cout("AXTN Awaiting Actions")
 #listener on on_ready
 @bot.event
 async def on_ready():
-	channel_sudo = bot.get_channel(856434834900254731)
-	await channel_sudo.send(f"AXTN: Successfully Booted")
+	channel_sudo = bot.get_channel(967532965636734996)
+	await channel_sudo.send(f"AXTN: Successfully Booted")^
+
+
+bot.run(TOKEN)
 
 
