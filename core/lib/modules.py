@@ -4,7 +4,7 @@ def _osn(sys_str):
     if  os.name == "nt":
         _sys(sys_str)
     else:
-        _sys(sys_str)
+        _sys("python3 -m ".format(sys_str))
 
 try:
     import os
@@ -25,4 +25,24 @@ def _modules():
         from discord.utils import get
     except ModuleNotFoundError:
         try:
-            if 
+            _osn(pip install discord.py)
+            _osn(pip install python-dotenv)
+            
+            import dotenv
+            import discord
+            from time import sleep
+            from dotenv import load_dotenv
+            from discord.utils import get
+            from discord.utils import get
+            from dotenv import load_dotenv
+            from discord.ext import commands
+            from discord.utils import get
+        except ModuleNotFoundError:
+            str_input = input("Want to try again? [y/n]")
+            if str_input == "y" or str_input == "Y":
+                modules()
+            else:
+                pass
+
+modules()
+print("Modules: Initialized")
