@@ -1,2 +1,25 @@
-- name: Discord Message Notify
-  uses: appleboy/discord-action@0.0.3
+name: Notification on push
+
+on:
+  push:
+    branches:
+    - main
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Discord notification
+      env:
+        DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        DISCORD_USERNAME: KrakenGIT
+        DISCORD_AVATAR: https://cdn.unix.lu/kraken.webp
+      uses: Ilshidur/action-discord@master
+      with:
+        args: 'A new commit has been pushed to axtn-discord-bot.'
+    - name: Discord notification
+      env:
+        DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+      uses: Ilshidur/action-discord@master
