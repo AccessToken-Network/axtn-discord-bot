@@ -1,8 +1,6 @@
 from os import system
 
-
-def _sys_py3(str_path):
-    return lambda a: system("python3 {}".format(str_path))
+_sys_py3 = lambda str_path : system("python3 {}".format(str_path))
 
 def _modules():
     _sys_py3("core/lib/modules.py")
@@ -18,12 +16,14 @@ def _quickstart_check():
         config = json.load(config_file)
 
         if config['quickstart']:
+            print("AXTN: Quickstart Active")
             _bot()
-        elif not config['quickstart']
+        elif not config['quickstart']:
+            print("AXTN: Quicktstart not Active")
             _modules()
-    
+    except:
+        print("Something went wrong!")
         
-
-if __name__ == "__main__":
+if __name__=="__main__":
     _quickstart_check()
     _modules()

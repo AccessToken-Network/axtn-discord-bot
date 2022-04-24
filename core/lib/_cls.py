@@ -1,6 +1,6 @@
 import os
 
-from _sys import _sys
+from _sys import *
 
 def _cls():
     if os.name == "nt":

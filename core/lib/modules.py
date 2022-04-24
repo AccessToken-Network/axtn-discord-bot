@@ -25,8 +25,8 @@ def _modules():
         from discord.utils import get
     except ModuleNotFoundError:
         try:
-            _osn(pip install discord.py)
-            _osn(pip install python-dotenv)
+            _osn("pip install discord.py")
+            _osn("pip install python-dotenv")
             
             import dotenv
             import discord
@@ -44,6 +44,6 @@ def _modules():
             else:
                 pass
 
-modules()
+_modules()
 print("Modules: Initialized")
 _sys("python3 ../core.py")
