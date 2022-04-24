@@ -9,12 +9,12 @@ from dotenv import load_dotenv
 from discord.ext import commands
 from discord.ext.commands import Bot
 
-from core.lib._sys import *
-from core.lib._cls import *
-from core.lib._cout import *
-from core.lib._colors import BColors
-from core.lib._debug import *
-from core.lib._timestamp import *
+from lib._sys import *
+from lib._cls import *
+from lib._cout import *
+from lib._colors import BColors
+from lib._debug import *
+from lib._timestamp import *
 
 try:
 	_cls()
