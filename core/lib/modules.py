@@ -1,5 +1,11 @@
 _sys = lambda sys_str : os.system(sys_str)
 
+def _osn(sys_str):
+    if  os.name == "nt":
+        _sys(sys_str)
+    else:
+        _sys(sys_str)
+
 try:
     import os
     from time import sleep
