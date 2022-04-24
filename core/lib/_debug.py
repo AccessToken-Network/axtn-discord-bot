@@ -1,7 +1,6 @@
 import datetime
 
-from ._colors import BColors
-from ._config import Config
+from lib._colors import BColors
 
 #Print Debug Function in Lambda
 

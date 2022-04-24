@@ -9,11 +9,11 @@ from dotenv import load_dotenv
 from discord.ext import commands
 from discord.ext.commands import Bot
 
-from lib._sys import *
-from lib._cls import *
-from lib._cout import *
+from lib._sys import _sys
+from lib._cls import _cls
+from lib._cout import _cout
 from lib._colors import BColors
-from lib._debug import *
+from lib._debug import _print_debug
 from lib._timestamp import *
 
 try:
@@ -35,7 +35,7 @@ try:
 		channel_sudo = bot.get_channel(967532965636734996)
 		await channel_sudo.send(f"AXTN: Successfully Booted")
 
-	bot.run(TOKEN)
+	bot.run(Token)
  
 except KeyboardInterrupt:
     print(BColors.YELLOW + "\nProgram closed by user (CTRL+C)")

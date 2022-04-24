@@ -1,9 +1,7 @@
 import os
 
-from _sys import *
-
 def _cls():
     if os.name == "nt":
-        _sys("cls")
+        os.system("cls")
     else:
-        _sys("clear")
+        os.system("clear")
