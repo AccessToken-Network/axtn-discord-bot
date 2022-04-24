@@ -14,4 +14,4 @@ AXTN Discord Server exclusive!
 
 ## Changes:
 
-Last updated: 24/04/2022
+!Last updated: 24/04/2022
