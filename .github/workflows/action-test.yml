@@ -9,33 +9,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - name: Set up Python 3.7
-      uses: actions/setup-python@v1
-      with:
-        python-version: 3.7
-    - name: Install dependencies
-      run: |
-        python scripts/os_specific_requirements.py
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
-      shell: bash
-    - name: Prepare Scripts
-      run: |
-        chmod +x scripts/*
-    - name: Lint
-      run: |
-        scripts/lint.sh
-      shell: bash
-    - name: Test
-      run: |
-        pytest --doctest-modules --cov=src/main/ --cov-report=xml
-    - name: Package
-      run: |
-        python scripts/package.py
-    - uses: actions/upload-artifact@master
-      with:
-        name: Pyinstaller EXE
-        path: dist/
     - name: Send Webhook Notification
       if: always()
       env:
