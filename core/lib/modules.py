@@ -44,6 +44,10 @@ def _modules():
             else:
                 pass
 
-_modules()
-print("Modules: Initialized")
-_sys("python3 ../core.py")
+try:
+    _modules()
+    print("Modules: Initialized")
+    
+except KeyboardInterrupt:
+    print(BColors.YELLOW + "\nProgram closed by user (CTRL+C)")
+    exit()

@@ -20,19 +20,28 @@ try:
 	_cls()
 	load_dotenv()
 	Token = os.getenv('DISCORD_TOKEN')
+	prefix = 'axtn/'
 
-	client = discord.Client()
+	intents = discord.Intents.all()
+	#client = discord.Client()
+ 
+	bot = commands.Bot(command_prefix=prefix, intents=intents)
 
-	_cout("AXTN: Configuration loaded")
-	_cout("AXTN Awaiting Actions")
+	_print_debug("AXTN: Configuration loaded")
+	_print_debug("AXTN: Awaiting Actions")
 
 	#listener on on_ready
-	@client.event
+	@bot.event
 	async def on_ready():
 		channel_bot = bot.get_channel(967532965636734996)
-		await channel_sudo.send(f"AXTN: Fuck You!")
+		await channel_bot.send(f"AXTN: Successfully Booted")
 
-	client.run(Token)
+	@bot.event
+	async def on_member_join(member):
+		channel_bot = bot.get_channel(967532965636734996)
+		await channel_bot.send(f"AXTN: {member} joined!")
+
+	bot.run(Token)
  
 except KeyboardInterrupt:
     print(BColors.YELLOW + "\nProgram closed by user (CTRL+C)")

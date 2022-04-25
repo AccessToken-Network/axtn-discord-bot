@@ -25,5 +25,10 @@ def _quickstart_check():
         print("Something went wrong!")
         
 if __name__=="__main__":
-    _quickstart_check()
-    _modules()
+    try:
+        _quickstart_check()
+        _modules()
+        
+    except KeyboardInterrupt:
+        print(BColors.YELLOW + "\nProgram closed by user (CTRL+C)")
+        exit()
