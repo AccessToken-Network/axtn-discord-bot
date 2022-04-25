@@ -51,3 +51,4 @@ try:
 except KeyboardInterrupt:
     print(BColors.YELLOW + "\nProgram closed by user (CTRL+C)")
     exit()
+    
