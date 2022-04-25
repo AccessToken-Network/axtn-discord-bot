@@ -63,9 +63,9 @@ try:
   
 	@bot.event
 	async def on_message(message):
-		if message.channel.id != staff_channels["staff_chat"] or message.channel.id != staff_channels["github"] or message.channel.id != staff_channels["github-audit-log"] or message.channel.id != staff_channels["audit"]:
-			if message.channel.id != staff_channels["audit-log"] or message.channel.id != staff_channels["super-audit"] or message.channel.id != staff_channels["disboard"] or message.channel.id != staff_channels["join-log"]:
-				if message.channel.id != staff_channels["leave-log"] or message.channel.id != staff_channels["bot"]:
+		if message.channel.id != staff_channels["staff-chat"] and message.channel.id != staff_channels["github"] and message.channel.id != staff_channels["github-audit-log"] and message.channel.id != staff_channels["audit"]:
+			if message.channel.id != staff_channels["audit-log"] and message.channel.id != staff_channels["super-audit"] and message.channel.id != staff_channels["disboard"] and message.channel.id != staff_channels["join-log"]:
+				if message.channel.id != staff_channels["leave-log"] and message.channel.id != staff_channels["bot"]:
 					if message.content == "ping" or message.content == "Ping":
 						channel_local = bot.get_channel(message.channel.id)
 						await channel_local.send(f"AXTN: Pong")
