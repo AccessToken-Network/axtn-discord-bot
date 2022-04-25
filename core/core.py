@@ -35,6 +35,7 @@ try:
 	async def on_ready():
 		channel_bot = bot.get_channel(967532965636734996)
 		await channel_bot.send(f"AXTN: Successfully Booted")
+		_print_debug(f"AXTN: Logged in on Server!")
 
 	@bot.event
 	async def on_member_join(member):
