@@ -21,7 +21,6 @@ try:
 	load_dotenv()
 	Token = os.getenv('DISCORD_TOKEN')
 	prefix = 'axtn/'
-
 	intents = discord.Intents.all()
 	#client = discord.Client()
  
@@ -29,6 +28,19 @@ try:
 
 	_print_debug("AXTN: Configuration loaded")
 	_print_debug("AXTN: Awaiting Actions")
+
+	staff_channels = {
+		"staff-chat" : 967573966313107456,
+		"github" : 967575140701442088,
+		"github-audit-log" : 967860766344626257,
+		"audit" : 967532828940177448,
+		"audit-log" : 967612494854123560,
+		"super-audit" : 967974412760530954,
+		"disboard" : 967617421726863421,
+		"join-log" : 967532895067590678,
+		"leave-log": 967532916005543996,
+		"bot" : 967532965636734996
+	}
 
 	#listener on on_ready
 	@bot.event
@@ -48,7 +60,23 @@ try:
 		channel_bot = bot.get_channel(967532916005543996)
 		await channel_bot.send(f"AXTN Admin Log: {member} left!")
 		_print_debug(f"AXTN: {member} joined!")
-
+  
+	@bot.event
+	async def on_message(message):
+		for id in staff_channels.values():
+			if message.channel.id != id:
+				if message.content == "ping" or message.content == "Ping":
+					channel_local = bot.get_channel(message.channel.id)
+					await channel_local.send(f"AXTN: Pong")
+				elif message.content == "pong" or message.content == "Pong":
+					channel_local = bot.get_channel(message.channel.id)
+					await channel_local.send(f"AXTN: Ping")
+				else:
+					channel_super_audit = bot.get_channel(staff_channels["super-audit"])
+					await channel_super_audit.send(f"{message.author.name}: {message.content}")
+			else:
+				pass
+  
 	bot.run(Token)
  
 except KeyboardInterrupt:
