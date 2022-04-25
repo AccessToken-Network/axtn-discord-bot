@@ -19,22 +19,20 @@ from lib._timestamp import *
 try:
 	_cls()
 	load_dotenv()
+	Token = os.getenv('DISCORD_TOKEN')
 
-	intents = Intents.all()
-	activity = discord.Activity(name='TCP', type=discord.ActivityType.watching)
-	client = discord.Client(intents=intents)
-	bot = Bot(command_prefix="$", intents=intents, activity=activity)
+	client = discord.Client()
 
 	_cout("AXTN: Configuration loaded")
 	_cout("AXTN Awaiting Actions")
 
 	#listener on on_ready
-	@bot.event
+	@client.event
 	async def on_ready():
 		channel_bot = bot.get_channel(967532965636734996)
 		await channel_sudo.send(f"AXTN: Fuck You!")
 
-	bot.run(os.getenv(DISCORD_TOKEN))
+	client.run(Token)
  
 except KeyboardInterrupt:
     print(BColors.YELLOW + "\nProgram closed by user (CTRL+C)")
