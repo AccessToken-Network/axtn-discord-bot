@@ -19,12 +19,12 @@ from lib._timestamp import *
 try:
 	_cls()
 	load_dotenv()
-	Token = os.getenv('DISCORD_TOKEN')
 
 	intents = Intents.all()
 	activity = discord.Activity(name='TCP', type=discord.ActivityType.watching)
-	bot = Bot(command_prefix="$", intents=intents, activity=activity)
+	Token = os.getenv(DISCORD_TOKEN)
 	client = discord.Client(intents=intents)
+	bot = Bot(command_prefix="$", intents=intents, activity=activity)
 
 	_cout("AXTN: Configuration loaded")
 	_cout("AXTN Awaiting Actions")
@@ -32,8 +32,8 @@ try:
 	#listener on on_ready
 	@bot.event
 	async def on_ready():
-		channel_sudo = bot.get_channel(967532965636734996)
-		await channel_sudo.send(f"AXTN: Successfully Booted")
+		channel_bot = bot.get_channel(967532965636734996)
+		await channel_sudo.send(f"AXTN: Fuck You!")
 
 	bot.run(Token)
  
