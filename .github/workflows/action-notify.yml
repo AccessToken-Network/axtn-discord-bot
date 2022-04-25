@@ -19,7 +19,7 @@ jobs:
         DISCORD_MULTILINE: 1
       uses: ezworx/action-discord@main
       with:
-        args: '🚀 - Commit has been pushed to {{ EVENT_PAYLOAD.repository.full_name }}.\n✨ - Commi: {{ EVENT_PAYLOAD.commits[0].message }}.'
+        args: '🚀 - Commit has been pushed to {{ EVENT_PAYLOAD.repository.full_name }}.\n✨ - Commit: {{ EVENT_PAYLOAD.commits[0].message }}.'
     - name: Discord notification
       env:
         DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
