@@ -63,19 +63,18 @@ try:
   
 	@bot.event
 	async def on_message(message):
-		for id in staff_channels.values():
-			if message.channel.id != id:
-				if message.content == "ping" or message.content == "Ping":
-					channel_local = bot.get_channel(message.channel.id)
-					await channel_local.send(f"AXTN: Pong")
-				elif message.content == "pong" or message.content == "Pong":
-					channel_local = bot.get_channel(message.channel.id)
-					await channel_local.send(f"AXTN: Ping")
-				else:
-					channel_super_audit = bot.get_channel(staff_channels["super-audit"])
-					await channel_super_audit.send(f"{message.author.name}: {message.content}")
-			else:
-				pass
+		if message.channel.id != staff_channels["staff_chat"] or message.channel.id != staff_channels["github"] or message.channel.id != staff_channels["github-audit-log"] or message.channel.id != staff_channels["audit"]:
+			if message.channel.id != staff_channels["audit-log"] or message.channel.id != staff_channels["super-audit"] or message.channel.id != staff_channels["disboard"] or message.channel.id != staff_channels["join-log"]:
+				if message.channel.id != staff_channels["leave-log"] or message.channel.id != staff_channels["bot"]:
+					if message.content == "ping" or message.content == "Ping":
+						channel_local = bot.get_channel(message.channel.id)
+						await channel_local.send(f"AXTN: Pong")
+					elif message.content == "pong" or message.content == "Pong":
+						channel_local = bot.get_channel(message.channel.id)
+						await channel_local.send(f"AXTN: Ping")
+					else:
+						channel_super_audit = bot.get_channel(staff_channels["super-audit"])
+						await channel_super_audit.send(f"{message.author.name}: {message.content}")
   
 	bot.run(Token)
  
