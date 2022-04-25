@@ -22,7 +22,6 @@ try:
 
 	intents = Intents.all()
 	activity = discord.Activity(name='TCP', type=discord.ActivityType.watching)
-	Token = os.getenv(DISCORD_TOKEN)
 	client = discord.Client(intents=intents)
 	bot = Bot(command_prefix="$", intents=intents, activity=activity)
 
@@ -35,7 +34,7 @@ try:
 		channel_bot = bot.get_channel(967532965636734996)
 		await channel_sudo.send(f"AXTN: Fuck You!")
 
-	bot.run(Token)
+	bot.run(os.getenv(DISCORD_TOKEN))
  
 except KeyboardInterrupt:
     print(BColors.YELLOW + "\nProgram closed by user (CTRL+C)")
