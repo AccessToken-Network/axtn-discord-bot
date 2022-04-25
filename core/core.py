@@ -33,7 +33,7 @@ try:
 		"staff-chat" : 967573966313107456,
 		"github" : 967575140701442088,
 		"github-audit-log" : 967860766344626257,
-		"audit" : 967532828940177448,
+		"audit-news" : 967532828940177448,
 		"audit-log" : 967612494854123560,
 		"super-audit" : 967974412760530954,
 		"disboard" : 967617421726863421,
@@ -63,7 +63,7 @@ try:
   
 	@bot.event
 	async def on_message(message):
-		if message.channel.id != staff_channels["staff-chat"] and message.channel.id != staff_channels["github"] and message.channel.id != staff_channels["github-audit-log"] and message.channel.id != staff_channels["audit"]:
+		if message.channel.id != staff_channels["staff-chat"] and message.channel.id != staff_channels["github"] and message.channel.id != staff_channels["github-audit-log"] and message.channel.id != staff_channels["audit-news"]:
 			if message.channel.id != staff_channels["audit-log"] and message.channel.id != staff_channels["super-audit"] and message.channel.id != staff_channels["disboard"] and message.channel.id != staff_channels["join-log"]:
 				if message.channel.id != staff_channels["leave-log"] and message.channel.id != staff_channels["bot"]:
 					if message.content == "ping" or message.content == "Ping":
