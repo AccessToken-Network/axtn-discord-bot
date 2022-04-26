@@ -12,12 +12,13 @@ from discord.ext.commands import Bot
 from lib._sys import _sys
 from lib._cls import _cls
 from lib._cout import _cout
+from lib._reboot import _reboot
 from lib._colors import BColors
 from lib._debug import _print_debug
 from lib._timestamp import *
 
 try:
-	_cls()
+	#_cls()
 	load_dotenv()
 	Token = os.getenv('DISCORD_TOKEN')
 	prefix = 'axtn/'
@@ -62,9 +63,15 @@ try:
 		channel_bot = bot.get_channel(967532916005543996)
 		await channel_bot.send(f"AXTN Admin Log: {member} left!")
 		_print_debug(f"AXTN: {member} joined!")
-  
+
 	@bot.event
 	async def on_message(message):
+		if message.channel.id == staff_channels["bot"]:
+			channel_bot = bot.get_channel(staff_channels["bot"])
+			await channel_bot.send(f"AXTN: Awaiting Reboot!")
+			_print_debug(f"AXTN: Awaiting Reboot!")
+			_reboot()
+     
 		if message.channel.id != staff_channels["staff-chat"] and message.channel.id != staff_channels["github"] and message.channel.id != staff_channels["github-audit-log"] and message.channel.id != staff_channels["audit-news"]:
 			if message.channel.id != staff_channels["audit-log"] and message.channel.id != staff_channels["super-audit"] and message.channel.id != staff_channels["disboard"] and message.channel.id != staff_channels["join-log"]:
 				if message.channel.id != staff_channels["leave-log"] and message.channel.id != staff_channels["bot"] and message.channel.id != staff_channels["ot-notes"] and message.channel.id != staff_channels["staff-nodes"]:
