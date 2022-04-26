@@ -68,10 +68,10 @@ try:
 				if message.channel.id != staff_channels["leave-log"] and message.channel.id != staff_channels["bot"]:
 					if message.content == "ping" or message.content == "Ping":
 						channel_local = bot.get_channel(message.channel.id)
-						await channel_local.send(f"AXTN: Pong")
+						await channel_local.send(f"AXTN: pong")
 					elif message.content == "pong" or message.content == "Pong":
 						channel_local = bot.get_channel(message.channel.id)
-						await channel_local.send(f"AXTN: Ping")
+						await channel_local.send(f"AXTN: ping")
 					else:
 						channel_super_audit = bot.get_channel(staff_channels["super-audit"])
 						await channel_super_audit.send(f"{message.author.name}: {message.content}")
@@ -79,5 +79,5 @@ try:
 	bot.run(Token)
  
 except KeyboardInterrupt:
-    print(BColors.YELLOW + "\nProgram closed by user (CTRL+C)")
+    print(BColors.YELLOW + "\nProgram closed by user ( CTRL+C )")
     exit()
