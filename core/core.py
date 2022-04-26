@@ -18,7 +18,7 @@ from lib._debug import _print_debug
 from lib._timestamp import *
 
 try:
-	#_cls()
+	_cls()
 	load_dotenv()
 	Token = os.getenv('DISCORD_TOKEN')
 	prefix = 'axtn/'
