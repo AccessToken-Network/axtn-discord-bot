@@ -12,7 +12,7 @@ from discord.ext.commands import Bot
 from lib._sys import _sys
 from lib._cls import _cls
 from lib._cout import _cout
-from lib._reboot import _reboot
+from _reboot import _reboot
 from lib._colors import BColors
 from lib._debug import _print_debug
 from lib._timestamp import *
