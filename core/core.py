@@ -67,10 +67,11 @@ try:
 	@bot.event
 	async def on_message(message):
 		if message.channel.id == staff_channels["bot"]:
-			channel_bot = bot.get_channel(staff_channels["bot"])
-			await channel_bot.send(f"AXTN: Awaiting Reboot!")
-			_print_debug(f"AXTN: Awaiting Reboot!")
-			_reboot()
+			if message.content == "reboot" or message.content == "Reboot":
+				channel_bot = bot.get_channel(staff_channels["bot"])
+				await channel_bot.send(f"AXTN: Awaiting Reboot!")
+				_print_debug(f"AXTN: Awaiting Reboot!")
+				_reboot()
      
 		if message.channel.id != staff_channels["staff-chat"] and message.channel.id != staff_channels["github"] and message.channel.id != staff_channels["github-audit-log"] and message.channel.id != staff_channels["audit-news"]:
 			if message.channel.id != staff_channels["audit-log"] and message.channel.id != staff_channels["super-audit"] and message.channel.id != staff_channels["disboard"] and message.channel.id != staff_channels["join-log"]:
