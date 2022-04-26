@@ -39,7 +39,9 @@ try:
 		"disboard" : 967617421726863421,
 		"join-log" : 967532895067590678,
 		"leave-log": 967532916005543996,
-		"bot" : 967532965636734996
+		"bot" : 967532965636734996,
+		"ot-notes" : 968551862716473466,
+		"staff-nodes" : 968550803440816158
 	}
 
 	#listener on on_ready
@@ -54,7 +56,7 @@ try:
 		channel_bot = bot.get_channel(967532895067590678)
 		await channel_bot.send(f"AXTN Admin Log: {member} joined!")
 		_print_debug(f"AXTN: {member} joined!")
-  
+
 	@bot.event
 	async def on_member_remove(member):
 		channel_bot = bot.get_channel(967532916005543996)
@@ -65,7 +67,7 @@ try:
 	async def on_message(message):
 		if message.channel.id != staff_channels["staff-chat"] and message.channel.id != staff_channels["github"] and message.channel.id != staff_channels["github-audit-log"] and message.channel.id != staff_channels["audit-news"]:
 			if message.channel.id != staff_channels["audit-log"] and message.channel.id != staff_channels["super-audit"] and message.channel.id != staff_channels["disboard"] and message.channel.id != staff_channels["join-log"]:
-				if message.channel.id != staff_channels["leave-log"] and message.channel.id != staff_channels["bot"]:
+				if message.channel.id != staff_channels["leave-log"] and message.channel.id != staff_channels["bot"] and message.channel.id != staff_channels["ot-notes"] and message.channel.id != staff_channels["staff-nodes"]:
 					if message.content == "ping" or message.content == "Ping":
 						channel_local = bot.get_channel(message.channel.id)
 						await channel_local.send(f"AXTN: pong")
