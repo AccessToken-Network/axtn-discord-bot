@@ -15,7 +15,7 @@ from discord.utils import get
 from dotenv import load_dotenv
 from discord.ext import commands
 from discord.ext.commands import Bot
-from discord_slash import SlashCommand
+from discord_slash import SlashCommand, SlashContext
 
 from lib._sys import _sys
 from lib._cls import _cls
