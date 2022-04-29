@@ -1,6 +1,9 @@
 import os
 import dotenv
 import discord
+import asyncio
+import time, datetime
+
 
 from time import sleep
 from discord import Intents
@@ -8,6 +11,7 @@ from discord.utils import get
 from dotenv import load_dotenv
 from discord.ext import commands
 from discord.ext.commands import Bot
+from discord_slash import SlashCommand
 
 from lib._sys import _sys
 from lib._cls import _cls
@@ -18,14 +22,26 @@ from lib._debug import _print_debug
 from lib._timestamp import *
 
 try:
+    
 	_cls()
+ 
+	#intent setting
+	intents = discord.Intents.all()
+	intents.typing = True
+	intents.presences = True
+	intents.members = True
+	intents.voice_states = True
+ 
 	load_dotenv()
 	Token = os.getenv('DISCORD_TOKEN')
-	prefix = 'axtn/'
-	intents = discord.Intents.all()
-	#client = discord.Client()
- 
+	prefix = '/'
+	
+	# setting up the bot, with its discritpion etc.
 	bot = commands.Bot(command_prefix=prefix, intents=intents)
+	slash = SlashCommand(bot, sync_commands=True)
+
+	# deleting default help comand
+	bot.remove_command("help")
 
 	_print_debug("AXTN: Configuration loaded")
 	_print_debug("AXTN: Awaiting Actions")
@@ -45,11 +61,12 @@ try:
 		"staff-nodes" : 968550803440816158
 	}
 
-	#listener on on_ready
+	#boot activity event
 	@bot.event
 	async def on_ready():
 		channel_bot = bot.get_channel(967532965636734996)
 		await channel_bot.send(f"AXTN: Successfully Booted")
+		await bot.change_presence(activity=discord.Game(name="localhost | exploring"))
 		_print_debug(f"AXTN: Logged in on Server!")
 
 	@bot.event
