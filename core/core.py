@@ -2,7 +2,10 @@ import os
 import dotenv
 import discord
 import asyncio
-import time, datetime
+import time
+import datetime
+
+boot = time.process_time()
 
 
 from time import sleep
@@ -65,7 +68,7 @@ try:
 	@bot.event
 	async def on_ready():
 		channel_bot = bot.get_channel(967532965636734996)
-		await channel_bot.send(f"AXTN: Logged in on Server as {bot.user}!")
+		await channel_bot.send(f"AXTN: Logged in on Server as {bot.user}! Boot Time: [{time.process_time() - boot}]")
 		await bot.change_presence(activity=discord.Game(name="localhost | exploring"))
 		_print_debug(f"AXTN: Logged in on Server as {bot.user}!")
 
@@ -80,6 +83,18 @@ try:
 		channel_bot = bot.get_channel(967532916005543996)
 		await channel_bot.send(f"AXTN Admin Log: {member} left!")
 		_print_debug(f"AXTN: {member} joined!")
+
+	@bot.command()
+	async def test(ctx):
+		await ctx.send("```\n"
+                   "This is a simple notes system, here are the available commands:\n"
+                   "\n"
+                   "  !notes                      - show a list of all notes available to read\n"
+                   "  !note <name>                - read note <name>\n"
+                   "  !writenote <name> <content> - write <content> to note <name>, replacing the current content if the note already exists\n"
+                   "  !deletenote <name>          - delete note <name>\n"
+                   "\n"
+                   "```")
 
 	@bot.event
 	async def on_message(message):
