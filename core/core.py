@@ -25,7 +25,7 @@ try:
     
 	_cls()
  
-	#intent setting
+	# Intent Setting
 	intents = discord.Intents.all()
 	intents.typing = True
 	intents.presences = True
@@ -67,7 +67,7 @@ try:
 		channel_bot = bot.get_channel(967532965636734996)
 		await channel_bot.send(f"AXTN: Successfully Booted")
 		await bot.change_presence(activity=discord.Game(name="localhost | exploring"))
-		_print_debug(f"AXTN: Logged in on Server!")
+		_print_debug(f"AXTN: Logged in on Server as {bot.user}!")
 
 	@bot.event
 	async def on_member_join(member):
