@@ -1,4 +1,5 @@
 import os
+import sys
 import dotenv
 import discord
 import asyncio
@@ -7,9 +8,9 @@ import datetime
 
 boot = time.process_time()
 
-
 from time import sleep
 from discord import Intents
+from datetime import datetime
 from discord.utils import get
 from dotenv import load_dotenv
 from discord.ext import commands
@@ -27,6 +28,7 @@ from lib._timestamp import *
 try:
     
 	_cls()
+	_cout(boot)	
  
 	# Intent Setting
 	intents = discord.Intents.all()
@@ -38,7 +40,7 @@ try:
 	load_dotenv()
 	Token = os.getenv('DISCORD_TOKEN')
 	prefix = '/'
-	
+
 	# setting up the bot, with its discritpion etc.
 	bot = commands.Bot(command_prefix=prefix, intents=intents)
 	slash = SlashCommand(bot, sync_commands=True)
@@ -68,9 +70,33 @@ try:
 	@bot.event
 	async def on_ready():
 		channel_bot = bot.get_channel(967532965636734996)
-		await channel_bot.send(f"AXTN: Logged in on Server as {bot.user}! Boot Time: [{time.process_time() - boot}]")
-		await bot.change_presence(activity=discord.Game(name="localhost | exploring"))
+		
+		presence_name = "localhost | exploring"
+		now = time.localtime()
+		current_time = time.strftime("%H:%M:%S", now)
+
+		await channel_bot.send("```js\n"
+                	f"AXTN: Logged in on Server as {bot.user}!\n"
+                	f"Current Time Stamp		: [{current_time}]\n"
+                	f"----------------------------------------\n"
+                	f"Boot Time     |			: [{time.process_time() - boot}]\n"
+					f"Member Count  |			: [{len(bot.users)}]\n"
+        			f"Presence      |			: [{presence_name}]\n"
+					f"System		|			: [{sys.platform}]\n"
+					f"Guilds		|			: [{len(bot.guilds)}]\n"
+					f"Latency	   |			: [{bot.latency}]\n"
+					f"-----------------------------------------\n"
+                   	"```")
+  
+		await bot.change_presence(activity=discord.Game(name=presence_name))
 		_print_debug(f"AXTN: Logged in on Server as {bot.user}!")
+		_print_debug(f"Current Time : [{current_time}]")
+		_print_debug(f"Boot Time : [{time.process_time() - boot}]")
+		_print_debug(f"Member Count : [{len(bot.users)}]")
+		_print_debug(f"Presence : [{presence_name}]")
+		_print_debug(f"System : [{sys.platform}]")
+		_print_debug(f"Guilds : [{len(bot.guilds)}]")
+		_print_debug(f"Latency : [{bot.latency}]")
 
 	@bot.event
 	async def on_member_join(member):
