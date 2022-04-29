@@ -16,6 +16,7 @@ from dotenv import load_dotenv
 from discord.ext import commands
 from discord.ext.commands import Bot
 from discord_slash import SlashCommand, SlashContext
+from discord_slash.utils.manage_commands import create_choice, create_option
 
 from lib._sys import _sys
 from lib._cls import _cls
