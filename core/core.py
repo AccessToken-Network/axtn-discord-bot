@@ -65,7 +65,7 @@ try:
 	@bot.event
 	async def on_ready():
 		channel_bot = bot.get_channel(967532965636734996)
-		await channel_bot.send(f"AXTN: Successfully Booted")
+		await channel_bot.send(f"AXTN: Logged in on Server as {bot.user}!")
 		await bot.change_presence(activity=discord.Game(name="localhost | exploring"))
 		_print_debug(f"AXTN: Logged in on Server as {bot.user}!")
 
@@ -84,7 +84,7 @@ try:
 	@bot.event
 	async def on_message(message):
 		if message.channel.id == staff_channels["bot"]:
-			if message.content == "reboot" or message.content == "Reboot":
+			if message.content == "/reboot" or message.content == "/Reboot":
 				channel_bot = bot.get_channel(staff_channels["bot"])
 				await channel_bot.send(f"AXTN: Awaiting Reboot!")
 				_print_debug(f"AXTN: Awaiting Reboot!")
