@@ -71,9 +71,9 @@ try:
 	async def on_ready():
 		channel_bot = bot.get_channel(967532965636734996)
 		
-		presence_name = "localhost | exploring"
 		now = time.localtime()
 		current_time = time.strftime("%H:%M:%S", now)
+		presence_name = f"Boot Time : {time.process_time() - boot}"
 
 		await channel_bot.send("```js\n"
                 	f"AXTN: Logged in on Server as {bot.user}!\n"
