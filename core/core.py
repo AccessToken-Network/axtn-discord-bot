@@ -67,6 +67,19 @@ try:
 		"staff-nodes" : 968550803440816158
 	}
 
+	user_channels = {
+		"chat" : 967529433433006173
+	}
+
+	'''@slash.slash(
+		name="test",
+		description="Just a test msg",
+		guild_ids=[967529432745132082]
+	)
+ 
+	async def _hello(ctx:SlashContext):
+		await ctx.send("ctx:slashContext Accepted!")'''
+
 	#boot activity event
 	@bot.event
 	async def on_ready():
@@ -111,18 +124,6 @@ try:
 		await channel_bot.send(f"AXTN Admin Log: {member} left!")
 		_print_debug(f"AXTN: {member} joined!")
 
-	@bot.command()
-	async def test(ctx):
-		await ctx.send("```\n"
-                   "This is a simple notes system, here are the available commands:\n"
-                   "\n"
-                   "  !notes                      - show a list of all notes available to read\n"
-                   "  !note <name>                - read note <name>\n"
-                   "  !writenote <name> <content> - write <content> to note <name>, replacing the current content if the note already exists\n"
-                   "  !deletenote <name>          - delete note <name>\n"
-                   "\n"
-                   "```")
-
 	@bot.event
 	async def on_message(message):
 		if message.channel.id == staff_channels["bot"]:
@@ -131,8 +132,33 @@ try:
 				await channel_bot.send(f"AXTN: Awaiting Reboot!")
 				_print_debug(f"AXTN: Awaiting Reboot!")
 				_reboot()
+    
+		elif message.channel.id == user_channels["chat"]:
+			if message.author.id == 250648489220898817 or message.author.id == 644590202030915594:
+				if message.content == "axtn/info":
+					channel_chat = bot.get_channel(user_channels["chat"])
+					now = time.localtime()
+					current_time = time.strftime("%H:%M:%S", now)
+					presence_name = f"Boot Time : {time.process_time() - boot}"
+					await channel_chat.send("```js\n"
+                		f"AXTN: Logged in on Server as {bot.user}!\n"
+                		f"Current Time Stamp		: [{current_time}]\n"
+                		f"----------------------------------------\n"
+                		f"Boot Time     |			: [{time.process_time() - boot}]\n"
+						f"Member Count  |			: [{len(bot.users)}]\n"
+        				f"Presence      |			: [{presence_name}]\n"
+						f"System		|			: [{sys.platform}]\n"
+						f"Guilds		|			: [{len(bot.guilds)}]\n"
+						f"Latency	   |			: [{bot.latency}]\n"
+						f"-----------------------------------------\n"
+                   		"```")
+				if message.content == "/reboot" or message.content == "/Reboot":
+					channel_chat = bot.get_channel(user_channels["chat"])
+					await channel_chat.send(f"AXTN: Awaiting Reboot!")
+					_print_debug(f"AXTN: Awaiting Reboot!")
+					_reboot()
      
-		if message.channel.id != staff_channels["staff-chat"] and message.channel.id != staff_channels["github"] and message.channel.id != staff_channels["github-audit-log"] and message.channel.id != staff_channels["audit-news"]:
+		elif message.channel.id != staff_channels["staff-chat"] and message.channel.id != staff_channels["github"] and message.channel.id != staff_channels["github-audit-log"] and message.channel.id != staff_channels["audit-news"]:
 			if message.channel.id != staff_channels["audit-log"] and message.channel.id != staff_channels["super-audit"] and message.channel.id != staff_channels["disboard"] and message.channel.id != staff_channels["join-log"]:
 				if message.channel.id != staff_channels["leave-log"] and message.channel.id != staff_channels["bot"] and message.channel.id != staff_channels["ot-notes"] and message.channel.id != staff_channels["staff-nodes"]:
 					if message.content == "ping" or message.content == "Ping":
