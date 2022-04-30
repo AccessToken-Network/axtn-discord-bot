@@ -132,7 +132,7 @@ try:
 	async def on_member_remove(member):
 		channel_bot = bot.get_channel(967532916005543996)
 		await channel_bot.send(f"AXTN Admin Log: {member} left!")
-		_print_debug(f"AXTN: {member} joined!")
+		_print_debug(f"AXTN: {member} joined !")
 
 	@bot.event
 	async def on_message(message):
