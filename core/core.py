@@ -18,6 +18,7 @@ from discord.ext.commands import Bot
 from discord_slash import SlashCommand, SlashContext
 from discord_slash.utils.manage_commands import create_choice, create_option
 
+from systemOS import current_system
 from lib._sys import _sys
 from lib._cls import _cls
 from lib._cout import _cout
@@ -96,7 +97,7 @@ try:
                 	f"Boot Time     |			: [{time.process_time() - boot}]\n"
 					f"Member Count  |			: [{len(bot.users)}]\n"
         			f"Presence      |			: [{presence_name}]\n"
-					f"System		|			: [{sys.platform}]\n"
+					f"System		|			: [{current_system()}]\n"
 					f"Guilds		|			: [{len(bot.guilds)}]\n"
 					f"Latency	   |			: [{bot.latency}]\n"
 					f"-----------------------------------------\n"
