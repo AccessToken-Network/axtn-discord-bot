@@ -2,9 +2,12 @@ import os
 import sys
 import dotenv
 import discord
+import psutil
 import asyncio
 import time
 import datetime
+import sysconfig
+import platform
 
 boot = time.process_time()
 
@@ -18,7 +21,6 @@ from discord.ext.commands import Bot
 from discord_slash import SlashCommand, SlashContext
 from discord_slash.utils.manage_commands import create_choice, create_option
 
-from systemOS import current_system
 from lib._sys import _sys
 from lib._cls import _cls
 from lib._cout import _cout
@@ -31,6 +33,9 @@ try:
     
 	_cls()
 	_cout(boot)	
+ 
+	#var
+	ram_usage = psutil.Process().memory_info().rss / (1024 * 1024)
  
 	# Intent Setting
 	intents = discord.Intents.all()
@@ -88,18 +93,20 @@ try:
 		
 		now = time.localtime()
 		current_time = time.strftime("%H:%M:%S", now)
-		presence_name = f"Boot Time : {time.process_time() - boot}"
+		presence_name = f"Boot Time: {(time.process_time() - boot):.4f}"
 
 		await channel_bot.send("```js\n"
                 	f"AXTN: Logged in on Server as {bot.user}!\n"
-                	f"Current Time Stamp		: [{current_time}]\n"
+                	f"Current Time Stamp	 	: [{current_time}]\n"
                 	f"----------------------------------------\n"
-                	f"Boot Time     |			: [{time.process_time() - boot}]\n"
+                	f"Boot Time     |			: [{(time.process_time() - boot):.4f}]\n"
 					f"Member Count  |			: [{len(bot.users)}]\n"
         			f"Presence      |			: [{presence_name}]\n"
-					f"System		|			: [{current_system()}]\n"
+					f"System		|			: [{platform.system()}]\n"
 					f"Guilds		|			: [{len(bot.guilds)}]\n"
-					f"Latency	   |			: [{bot.latency}]\n"
+					f"Latency	   |			: [{bot.latency:.4f}]\n"
+					f"Ram Usage	 |			: [{ram_usage:.2f} MB]\n"
+					f"SysConfig	 |			: [{sysconfig.get_platform()}]\n"
 					f"-----------------------------------------\n"
                    	"```")
   
@@ -109,9 +116,11 @@ try:
 		_print_debug(f"Boot Time : [{time.process_time() - boot}]")
 		_print_debug(f"Member Count : [{len(bot.users)}]")
 		_print_debug(f"Presence : [{presence_name}]")
-		_print_debug(f"System : [{sys.platform}]")
+		_print_debug(f"System : [{platform.system()}]")
 		_print_debug(f"Guilds : [{len(bot.guilds)}]")
 		_print_debug(f"Latency : [{bot.latency}]")
+		_print_debug(f"Ram Usage : [{ram_usage:.2f} MB]")
+		_print_debug(f"SysConfig : [{sysconfig.get_platform()}]")
 
 	@bot.event
 	async def on_member_join(member):
@@ -147,17 +156,19 @@ try:
 					current_time = time.strftime("%H:%M:%S", now)
 					presence_name = f"Boot Time : {time.process_time() - boot}"
 					await channel_chat.send("```js\n"
-                		f"AXTN: Logged in on Server as {bot.user}!\n"
-                		f"Current Time Stamp		: [{current_time}]\n"
-                		f"----------------------------------------\n"
-                		f"Boot Time     |			: [{time.process_time() - boot}]\n"
-						f"Member Count  |			: [{len(bot.users)}]\n"
-        				f"Presence      |			: [{presence_name}]\n"
-						f"System		|			: [{current_system()}]\n"
-						f"Guilds		|			: [{len(bot.guilds)}]\n"
-						f"Latency	   |			: [{bot.latency}]\n"
-						f"-----------------------------------------\n"
-                   		"```")
+                	f"AXTN: Logged in on Server as {bot.user}!\n"
+                	f"Current Time Stamp	 	: [{current_time}]\n"
+                	f"----------------------------------------\n"
+                	f"Boot Time     |			: [{(time.process_time() - boot):.4f}]\n"
+					f"Member Count  |			: [{len(bot.users)}]\n"
+        			f"Presence      |			: [{presence_name}]\n"
+					f"System		|			: [{platform.system()}]\n"
+					f"Guilds		|			: [{len(bot.guilds)}]\n"
+					f"Latency	   |			: [{bot.latency:.4f}]\n"
+					f"Ram Usage	 |			: [{ram_usage:.2f} MB]\n"
+					f"SysConfig	 |			: [{sysconfig.get_platform()}]\n"
+					f"-----------------------------------------\n"
+                   	"```")
 				if message.content == "/reboot" or message.content == "/Reboot":
 					channel_chat = bot.get_channel(user_channels["chat"])
 					await channel_chat.send(f"AXTN: Awaiting Reboot!")
