@@ -2,7 +2,10 @@ import time
 boot = time.process_time()
 
 import os
+import re
 import sys
+import uuid
+import socket
 import psutil
 import dotenv
 import discord
@@ -36,7 +39,6 @@ try:
 	load_dotenv()
  
 	# declarings
-	ram_usage = psutil.Process().memory_info().rss / (1024 * 1024)
 	intents = discord.Intents.all()
 	intents.typing = True
 	intents.presences = True
@@ -50,6 +52,21 @@ try:
 
 	_print_debug("AXTN: Configuration loaded")
 	_print_debug("AXTN: Awaiting Actions")
+
+	try:
+        info={}
+        info['platform']=platform.system()
+        info['platform-release']=platform.release()
+        info['platform-version']=platform.version()
+        info['architecture']=platform.machine()
+        info['hostname']=socket.gethostname()
+        info['ip-address']=socket.gethostbyname(socket.gethostname())
+        info['mac-address']=':'.join(re.findall('..', '%012x' % uuid.getnode()))
+        info['processor']=platform.processor()
+        info['ram']=str(round(psutil.virtual_memory().total / (1024.0 **3)))+" GB"
+        return json.dumps(info)
+    except Exception as e:
+        print(e)
 
 	staff_channels = {
 		"staff-chat" : 967573966313107456,
@@ -84,10 +101,13 @@ try:
 					f"Member Count  |			: [{len(bot.users)}]\n"
         			f"Presence      |			: [{presence_name}]\n"
 					f"System		|			: [{platform.system()}]\n"
+					f"Release		|			: [{info['platform-release']}]\n"
 					f"Guilds		|			: [{len(bot.guilds)}]\n"
 					f"Latency	   |			: [{bot.latency:.4f}]\n"
-					f"Ram Usage	 |			: [{ram_usage:.2f} MB]\n"
+					f"Ram Usage	 |			: [{info['ram'}]\n"
 					f"SysConfig	 |			: [{sysconfig.get_platform()}]\n"
+					f"Processor  |			: [{info['processor']}]\n"
+					f"Hostname   |			: [{info["hostname"]}]\n"
 					f"-----------------------------------------\n"
 					f"/git pull - for updates\n"
                    	"```")
