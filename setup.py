@@ -1,4 +1,5 @@
 from os import system
+from core.lib._colors import BColors
 
 _sys_py3 = lambda str_path : system("python3 {}".format(str_path))
 

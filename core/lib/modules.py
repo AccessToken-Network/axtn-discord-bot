@@ -1,4 +1,6 @@
+import sys
 _sys = lambda sys_str : os.system(sys_str)
+from _colors import BColors
 
 def _osn(sys_str):
     if  os.name == "nt":

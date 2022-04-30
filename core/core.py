@@ -132,6 +132,11 @@ try:
 				await channel_bot.send(f"AXTN: Awaiting Reboot!")
 				_print_debug(f"AXTN: Awaiting Reboot!")
 				_reboot()
+			elif message.content == "/exit" or message.content == "/close":
+				channel_bot = bot.get_channel(staff_channels["bot"])
+				await channel_bot.send(f"AXTN: Awaiting Shutdown!")
+				_print_debug(f"AXTN: Awaiting Shutdown!")
+				sys.exit()
     
 		elif message.channel.id == user_channels["chat"]:
 			if message.author.id == 250648489220898817 or message.author.id == 644590202030915594:
