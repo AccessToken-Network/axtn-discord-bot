@@ -147,6 +147,11 @@ try:
 				await channel_bot.send(f"AXTN: Awaiting Shutdown!")
 				_print_debug(f"AXTN: Awaiting Shutdown!")
 				sys.exit()
+			elif message.content == "/git pull" or message.content == "/gpull":
+				channel_bot = bot.get_channel(staff_channels["bot"])
+				await channel_bot.send(f"AXTN: Pulling!")
+				_print_debug(f"AXTN: Pulling!")
+				_sys("python3 core/gpull.py")
     
 		elif message.channel.id == user_channels["chat"]:
 			if message.author.id == 250648489220898817 or message.author.id == 644590202030915594:
