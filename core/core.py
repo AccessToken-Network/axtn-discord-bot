@@ -154,7 +154,7 @@ try:
 					channel_chat = bot.get_channel(user_channels["chat"])
 					now = time.localtime()
 					current_time = time.strftime("%H:%M:%S", now)
-					presence_name = f"Boot Time : {time.process_time() - boot}"
+					presence_name = f"Boot Time : {(time.process_time() - boot):.4f}"
 					await channel_chat.send("```js\n"
                 	f"AXTN: Logged in on Server as {bot.user}!\n"
                 	f"Current Time Stamp	 	: [{current_time}]\n"
