@@ -1,15 +1,15 @@
+import time
+boot = time.process_time()
+
 import os
 import sys
+import psutil
 import dotenv
 import discord
-import psutil
 import asyncio
-import time
+import platform
 import datetime
 import sysconfig
-import platform
-
-boot = time.process_time()
 
 from time import sleep
 from discord import Intents
@@ -25,34 +25,27 @@ from lib._sys import _sys
 from lib._cls import _cls
 from lib._cout import _cout
 from _reboot import _reboot
+from lib._timestamp import *
 from lib._colors import BColors
 from lib._debug import _print_debug
-from lib._timestamp import *
 
 try:
     
 	_cls()
-	_cout(boot)	
+	_cout(boot)
+	load_dotenv()
  
-	#var
+	# declarings
 	ram_usage = psutil.Process().memory_info().rss / (1024 * 1024)
- 
-	# Intent Setting
 	intents = discord.Intents.all()
 	intents.typing = True
 	intents.presences = True
 	intents.members = True
 	intents.voice_states = True
- 
-	load_dotenv()
-	Token = os.getenv('DISCORD_TOKEN')
+ 	Token = os.getenv('DISCORD_TOKEN')
 	prefix = '/'
-
-	# setting up the bot, with its discritpion etc.
 	bot = commands.Bot(command_prefix=prefix, intents=intents)
 	slash = SlashCommand(bot, sync_commands=True)
-
-	# deleting default help comand
 	bot.remove_command("help")
 
 	_print_debug("AXTN: Configuration loaded")
@@ -77,24 +70,12 @@ try:
 		"chat" : 967529433433006173
 	}
 
-	'''@slash.slash(
-		name="test",
-		description="Just a test msg",
-		guild_ids=[967529432745132082]
-	)
- 
-	async def _hello(ctx:SlashContext):
-		await ctx.send("ctx:slashContext Accepted!")'''
-
-	#boot activity event
 	@bot.event
 	async def on_ready():
 		channel_bot = bot.get_channel(967532965636734996)
-		
 		now = time.localtime()
 		current_time = time.strftime("%H:%M:%S", now)
 		presence_name = f"Boot Time: {(time.process_time() - boot):.4f}"
-
 		await channel_bot.send("```js\n"
                 	f"AXTN: Logged in on Server as {bot.user}!\n"
                 	f"Current Time Stamp	 	: [{current_time}]\n"
