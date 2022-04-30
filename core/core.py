@@ -153,7 +153,7 @@ try:
                 		f"Boot Time     |			: [{time.process_time() - boot}]\n"
 						f"Member Count  |			: [{len(bot.users)}]\n"
         				f"Presence      |			: [{presence_name}]\n"
-						f"System		|			: [{sys.platform}]\n"
+						f"System		|			: [{current_system()}]\n"
 						f"Guilds		|			: [{len(bot.guilds)}]\n"
 						f"Latency	   |			: [{bot.latency}]\n"
 						f"-----------------------------------------\n"
