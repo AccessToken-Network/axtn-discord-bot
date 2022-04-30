@@ -108,7 +108,7 @@ try:
 					f"Ram Usage	 |			: [{ram_usage:.2f} MB]\n"
 					f"SysConfig	 |			: [{sysconfig.get_platform()}]\n"
 					f"-----------------------------------------\n"
-					f"(/git pull - for updates\n"
+					f"/git pull - for updates\n"
                    	"```")
   
 		await bot.change_presence(activity=discord.Game(name=presence_name))
@@ -174,7 +174,7 @@ try:
 					f"Ram Usage	 |			: [{ram_usage:.2f} MB]\n"
 					f"SysConfig	 |			: [{sysconfig.get_platform()}]\n"
 					f"-----------------------------------------\n"
-					f"(/git pull - for updates\n"
+					f"/git pull - for updates\n"
                    	"```")
 				if message.content == "/reboot" or message.content == "/Reboot":
 					channel_chat = bot.get_channel(user_channels["chat"])
