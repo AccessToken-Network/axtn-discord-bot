@@ -44,7 +44,7 @@ try:
 	intents.presences = True
 	intents.members = True
 	intents.voice_states = True
- 	Token = os.getenv('DISCORD_TOKEN')
+	Token = os.getenv('DISCORD_TOKEN')
 	prefix = '/'
 	bot = commands.Bot(command_prefix=prefix, intents=intents)
 	slash = SlashCommand(bot, sync_commands=True)
@@ -54,20 +54,19 @@ try:
 	_print_debug("AXTN: Awaiting Actions")
 
 	try:
-        info={}
-        info['platform']=platform.system()
-        info['platform-release']=platform.release()
-        info['platform-version']=platform.version()
-        info['architecture']=platform.machine()
-        info['hostname']=socket.gethostname()
-        info['ip-address']=socket.gethostbyname(socket.gethostname())
-        info['mac-address']=':'.join(re.findall('..', '%012x' % uuid.getnode()))
-        info['processor']=platform.processor()
-        info['ram']=str(round(psutil.virtual_memory().total / (1024.0 **3)))+" GB"
-        return json.dumps(info)
-    except Exception as e:
-        print(e)
-
+		info={}
+		info['platform']=platform.system()
+		info['platform-release']=platform.release()
+		info['platform-version']=platform.version()
+		info['architecture']=platform.machine()
+		info['hostname']=socket.gethostname()
+		info['ip-address']=socket.gethostbyname(socket.gethostname())
+		info['mac-address']=':'.join(re.findall('..', '%012x' % uuid.getnode()))
+		info['processor']=platform.processor()
+		info['ram']=str(round(psutil.virtual_memory().total / (1024.0 **3)))+" GB"
+	except Exception as e:
+		print(e)
+		
 	staff_channels = {
 		"staff-chat" : 967573966313107456,
 		"github" : 967575140701442088,
@@ -92,7 +91,7 @@ try:
 		channel_bot = bot.get_channel(967532965636734996)
 		now = time.localtime()
 		current_time = time.strftime("%H:%M:%S", now)
-		presence_name = f"Boot Time: {(time.process_time() - boot):.4f}"
+		presence_name = f"Boot Time: {(time.process_time() - boot):.4f}s"
 		await channel_bot.send("```js\n"
                 	f"AXTN: Logged in on Server as {bot.user}!\n"
                 	f"Current Time Stamp	 	: [{current_time}]\n"
@@ -101,13 +100,14 @@ try:
 					f"Member Count  |			: [{len(bot.users)}]\n"
         			f"Presence      |			: [{presence_name}]\n"
 					f"System		|			: [{platform.system()}]\n"
-					f"Release		|			: [{info['platform-release']}]\n"
+					f"Release	   |			: [{info['platform-release']}]\n"
 					f"Guilds		|			: [{len(bot.guilds)}]\n"
 					f"Latency	   |			: [{bot.latency:.4f}]\n"
-					f"Ram Usage	 |			: [{info['ram'}]\n"
+					f"Ram Usage	 |			: [{info['ram']}]\n"
 					f"SysConfig	 |			: [{sysconfig.get_platform()}]\n"
-					f"Processor  |			: [{info['processor']}]\n"
-					f"Hostname   |			: [{info["hostname"]}]\n"
+					f"Processor     |			: [{info['processor']}]\n"
+					f"Hostname      |			: [{info['hostname']}]\n"
+					f"Architecture  |			: [{info['architecture']}]\n"
 					f"-----------------------------------------\n"
 					f"/git pull - for updates\n"
                    	"```")
@@ -121,7 +121,7 @@ try:
 		_print_debug(f"System : [{platform.system()}]")
 		_print_debug(f"Guilds : [{len(bot.guilds)}]")
 		_print_debug(f"Latency : [{bot.latency}]")
-		_print_debug(f"Ram Usage : [{ram_usage:.2f} MB]")
+		_print_debug(f"Ram Usage : [{info['ram']} MB]")
 		_print_debug(f"SysConfig : [{sysconfig.get_platform()}]")
 
 	@bot.event
@@ -170,10 +170,14 @@ try:
 					f"Member Count  |			: [{len(bot.users)}]\n"
         			f"Presence      |			: [{presence_name}]\n"
 					f"System		|			: [{platform.system()}]\n"
+					f"Release	   |			: [{info['platform-release']}]\n"
 					f"Guilds		|			: [{len(bot.guilds)}]\n"
 					f"Latency	   |			: [{bot.latency:.4f}]\n"
-					f"Ram Usage	 |			: [{ram_usage:.2f} MB]\n"
+					f"Ram Usage	 |			: [{info['ram']}]\n"
 					f"SysConfig	 |			: [{sysconfig.get_platform()}]\n"
+					f"Processor     |			: [{info['processor']}]\n"
+					f"Hostname      |			: [{info['hostname']}]\n"
+					f"Architecture  |			: [{info['architecture']}]\n"
 					f"-----------------------------------------\n"
 					f"/git pull - for updates\n"
                    	"```")
