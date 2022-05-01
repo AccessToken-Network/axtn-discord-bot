@@ -35,7 +35,7 @@ from lib._debug import _print_debug
 try:
     
     try:
-		_cls()
+        _cls()
 		_cout(boot)
 		load_dotenv()
  
