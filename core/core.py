@@ -36,23 +36,23 @@ try:
     
     try:
         _cls()
-		_cout(boot)
-		load_dotenv()
- 
-		intents = discord.Intents.all()
-		intents.typing = True
-		intents.presences = True
-		intents.members = True
-		intents.voice_states = True
-		Token = os.getenv('DISCORD_TOKEN')
-		prefix = '/'
-		bot = commands.Bot(command_prefix=prefix, intents=intents)
-		slash = SlashCommand(bot, sync_commands=True)
-		bot.remove_command("help")
-		_print_debug("AXTN: Configuration loaded")
-	except:
-		_print_debug("AXTN: Couldn't load Configuration in core.py")
-
+        _cout(boot)
+        load_dotenv()
+        
+        intents = discord.Intents.all()
+        intents.typing = True
+        intents.presences = True
+        intents.members = True
+        intents.voice_states = True
+        Token = os.getenv('DISCORD_TOKEN')
+        prefix = '/'
+        bot = commands.Bot(command_prefix=prefix, intents=intents)
+        slash = SlashCommand(bot, sync_commands=True)
+        bot.remove_command("help")
+        _print_debug("AXTN: Configuration loaded")
+    except:
+        _print_debug("AXTN: Couldn't load Configuration in core.py")
+        
 	try:
 		info={}
 		info['platform']=platform.system()
