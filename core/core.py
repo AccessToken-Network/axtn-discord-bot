@@ -16,6 +16,7 @@ import platform
 import sysconfig
 
 from time import sleep
+from asyncio import sleep
 from discord import Intents
 from datetime import datetime
 from discord.utils import get
@@ -60,7 +61,7 @@ try:
 		info['ip-address']=socket.gethostbyname(socket.gethostname())
 		info['mac-address']=':'.join(re.findall('..', '%012x' % uuid.getnode()))
 		info['processor']=platform.processor()
-		info['ram']=str(round(psutil.virtual_memory().total / (1024.0 **3)))+" GB"
+		info['ram']=psutil.virtual_memory().percent
 	except Exception as e:
 		_print_debug(e)
 			
@@ -75,13 +76,21 @@ try:
 		"bot" : 967532965636734996,
 		"ot-notes" : 968551862716473466,
 		"staff-nodes" : 968550803440816158,
-		"super-audit" : 967974412760530954
+		"super-audit" : 967974412760530954,
+		"disboard" : 967617421726863421
 	}
 	
 	user_channels = {
 		"chat" : 967529433433006173
 	}
 	
+	async def autobump(channel_disboard):
+		await asyncio.sleep(5)
+		await channel_disboard.send("/bump")
+		_print_debug("AXTN: /bump send in #Disboard, Timer now on 02:00 Hours!")
+		await asyncio.sleep(7200)
+
+
 	@bot.event
 	async def on_ready():
 		channel_bot = bot.get_channel(967532965636734996)
@@ -104,7 +113,7 @@ try:
 					f"Release	   |			: [{info['platform-release']}]\n"
 					f"Guilds		|			: [{len(bot.guilds)}]\n"
 					f"Latency	   |			: [{bot.latency:.4f}]\n"
-					f"Ram Usage	 |			: [{info['ram']}]\n"
+					f"Ram Usage	 |			: [{info['ram']}%]\n"
 					f"SysConfig	 |			: [{sysconfig.get_platform()}]\n"
 					f"Processor     |			: [{info['processor']}]\n"
 					f"Hostname      |			: [{info['hostname']}]\n"
@@ -124,7 +133,7 @@ try:
 			_print_debug(f"System : [{platform.system()}]")
 			_print_debug(f"Guilds : [{len(bot.guilds)}]")
 			_print_debug(f"Latency : [{bot.latency}]")
-			_print_debug(f"Ram Usage : [{info['ram']}]")
+			_print_debug(f"Ram Usage : [{info['ram']}%]")
 			_print_debug(f"SysConfig : [{sysconfig.get_platform()}]")
 			_print_debug(f"Processor : [{info['processor']}]")
 			_print_debug(f"Hostname : [{info['hostname']}]")
@@ -163,6 +172,9 @@ try:
 					await channel_bot.send(f"AXTN: Pulling!")
 					_print_debug(f"AXTN: Pulling!")
 					_sys("python3 core/gpull.py")
+				elif message.content == "/init bump" or message.content == "/Init Bump":
+					channel_disboard = bot.get_channel(staff_channels["disboard"])
+					autobump(channel_disboard)
 	
 			elif message.channel.id == user_channels["chat"]:
 				if message.author.id == 250648489220898817 or message.author.id == 644590202030915594:
@@ -183,7 +195,7 @@ try:
 							f"Release	   |			: [{info['platform-release']}]\n"
 							f"Guilds		|			: [{len(bot.guilds)}]\n"
 							f"Latency	   |			: [{bot.latency:.4f}]\n"
-							f"Ram Usage	 |			: [{info['ram']}]\n"
+							f"Ram Usage	 |			: [{info['ram']}%]\n"
 							f"SysConfig	 |			: [{sysconfig.get_platform()}]\n"
 							f"Processor     |			: [{info['processor']}]\n"
 							f"Hostname      |			: [{info['hostname']}]\n"
