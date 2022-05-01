@@ -208,9 +208,7 @@ try:
 						await channel_chat.send(f"AXTN: Awaiting Reboot!")
 						_print_debug(f"AXTN: Awaiting Reboot!")
 						_reboot()
-			elif message.channel.id != staff_channels["staff-chat"] and message.channel.id != staff_channels["github"] and message.channel.id != staff_channels["github-audit-log"] and message.channel.id != staff_channels["audit-news"]:
-				if message.channel.id != staff_channels["audit-log"] and message.channel.id != staff_channels["super-audit"] and message.channel.id != staff_channels["disboard"] and message.channel.id != staff_channels["join-log"]:
-					if message.channel.id != staff_channels["leave-log"] and message.channel.id != staff_channels["bot"] and message.channel.id != staff_channels["ot-notes"] and message.channel.id != staff_channels["staff-nodes"]:
+					if message.channel.id not in staff_channels:
 						if message.content == "ping" or message.content == "Ping":
 							channel_local = bot.get_channel(message.channel.id)
 							await channel_local.send(f"AXTN: pong")
