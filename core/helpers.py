@@ -1,4 +1,4 @@
-BASE_PATH = "core/"
+BASE_PATH = "core/notes/"
 
 
 def getPath(ctx):
