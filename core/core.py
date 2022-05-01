@@ -1,5 +1,8 @@
 import time
-boot = time.process_time()
+import datetime
+#boot = time.process_time()
+clock_t0 = time.time()
+t0 = time.process_time()
 
 import os
 import re
@@ -11,7 +14,6 @@ import dotenv
 import discord
 import asyncio
 import platform
-import datetime
 import sysconfig
 
 from time import sleep
@@ -33,25 +35,21 @@ from lib._colors import BColors
 from lib._debug import _print_debug
 
 try:
-	
-	try:
-		_cls()
-		_cout(boot)
-		load_dotenv()
+	_cls()
+	print(f'Clock-t0: {clock_t0}, CPU-t0: {t0}')
+	load_dotenv()
 		
-		intents = discord.Intents.all()
-		intents.typing = True
-		intents.presences = True
-		intents.members = True
-		intents.voice_states = True
-		Token = os.getenv('DISCORD_TOKEN')
-		prefix = '/'
-		bot = commands.Bot(command_prefix=prefix, intents=intents)
-		slash = SlashCommand(bot, sync_commands=True)
-		bot.remove_command("help")
-		_print_debug("AXTN: Configuration loaded")
-	except:
-		_print_debug("AXTN: Couldn't load Configuration in core.py")
+	intents = discord.Intents.all()
+	intents.typing = True
+	intents.presences = True
+	intents.members = True
+	intents.voice_states = True
+	Token = os.getenv('DISCORD_TOKEN')
+	prefix = '/'
+	bot = commands.Bot(command_prefix=prefix, intents=intents)
+	slash = SlashCommand(bot, sync_commands=True)
+	bot.remove_command("help")
+	_print_debug("AXTN: Configuration loaded")
 		
 	try:
 		info={}
@@ -89,12 +87,17 @@ try:
 		channel_bot = bot.get_channel(967532965636734996)
 		now = time.localtime()
 		current_time = time.strftime("%H:%M:%S", now)
-		presence_name = f"Boot Time: {(time.process_time() - boot):.4f}s"
+		t1 = time.process_time()
+		clock_t1 = time.time()
+		cpu_result = t1 - t0
+		clock_result = clock_t1 - clock_t0
+		presence_name = f"Boot Time: {cpu_result:.4f}s"
 		await channel_bot.send("```js\n"
 					f"AXTN: Logged in on Server as {bot.user}!\n"
 					f"Current Time Stamp	 	: [{current_time}]\n"
 					f"----------------------------------------\n"
-					f"Boot Time     |			: [{(time.process_time() - boot):.4f}]\n"
+					f"Cpu Boot      |			: [{cpu_result:.4f}]\n"
+					f"Clock Boot    |			: [{clock_result}]\n"
 					f"Member Count  |			: [{len(bot.users)}]\n"
 					f"Presence      |			: [{presence_name}]\n"
 					f"System		|			: [{platform.system()}]\n"
@@ -114,13 +117,14 @@ try:
 		try:
 			_print_debug(f"AXTN: Logged in on Server as {bot.user}!")
 			_print_debug(f"Current Time : [{current_time}]")
-			_print_debug(f"Boot Time : [{time.process_time() - boot}]")
+			_print_debug(f"CPU Boot Time : [{cpu_result:.4f}]")
+			_print_debug(f"CLOCK Boot Time: [{clock_result:.4f}]")
 			_print_debug(f"Member Count : [{len(bot.users)}]")
 			_print_debug(f"Presence : [{presence_name}]")
 			_print_debug(f"System : [{platform.system()}]")
 			_print_debug(f"Guilds : [{len(bot.guilds)}]")
 			_print_debug(f"Latency : [{bot.latency}]")
-			_print_debug(f"Ram Usage : [{info['ram']} MB]")
+			_print_debug(f"Ram Usage : [{info['ram']}]")
 			_print_debug(f"SysConfig : [{sysconfig.get_platform()}]")
 			_print_debug(f"Processor : [{info['processor']}]")
 			_print_debug(f"Hostname : [{info['hostname']}]")
@@ -166,26 +170,27 @@ try:
 						channel_chat = bot.get_channel(user_channels["chat"])
 						now = time.localtime()
 						current_time = time.strftime("%H:%M:%S", now)
-						presence_name = f"Boot Time : {(time.process_time() - boot):.4f}"
+						presence_name = f"Boot Time : {cpu_result:.4f}"
 						await channel_chat.send("```js\n"
-						f"AXTN: Logged in on Server as {bot.user}!\n"
-						f"Current Time Stamp	 	: [{current_time}]\n"
-						f"----------------------------------------\n"
-						f"Boot Time     |			: [{(time.process_time() - boot):.4f}]\n"
-						f"Member Count  |			: [{len(bot.users)}]\n"
-						f"Presence      |			: [{presence_name}]\n"
-						f"System		|			: [{platform.system()}]\n"
-						f"Release	   |			: [{info['platform-release']}]\n"
-						f"Guilds		|			: [{len(bot.guilds)}]\n"
-						f"Latency	   |			: [{bot.latency:.4f}]\n"
-						f"Ram Usage	 |			: [{info['ram']}]\n"
-						f"SysConfig	 |			: [{sysconfig.get_platform()}]\n"
-						f"Processor     |			: [{info['processor']}]\n"
-						f"Hostname      |			: [{info['hostname']}]\n"
-						f"Architecture  |			: [{info['architecture']}]\n"
-						f"-----------------------------------------\n"
-						f"/git pull - for updates\n"
-				   		"```")
+					f"AXTN: Logged in on Server as {bot.user}!\n"
+					f"Current Time Stamp	 	: [{current_time}]\n"
+					f"----------------------------------------\n"
+					f"Cpu Boot      |			: [{cpu_result:.4f}]\n"
+					f"Clock Boot    |			: [{clock_result}]\n"
+					f"Member Count  |			: [{len(bot.users)}]\n"
+					f"Presence      |			: [{presence_name}]\n"
+					f"System		|			: [{platform.system()}]\n"
+					f"Release	   |			: [{info['platform-release']}]\n"
+					f"Guilds		|			: [{len(bot.guilds)}]\n"
+					f"Latency	   |			: [{bot.latency:.4f}]\n"
+					f"Ram Usage	 |			: [{info['ram']}]\n"
+					f"SysConfig	 |			: [{sysconfig.get_platform()}]\n"
+					f"Processor     |			: [{info['processor']}]\n"
+					f"Hostname      |			: [{info['hostname']}]\n"
+					f"Architecture  |			: [{info['architecture']}]\n"
+					f"-----------------------------------------\n"
+					f"/git pull - for updates\n"
+	 				"```")
 					if message.content == "/reboot" or message.content == "/Reboot":
 						channel_chat = bot.get_channel(user_channels["chat"])
 						await channel_chat.send(f"AXTN: Awaiting Reboot!")
