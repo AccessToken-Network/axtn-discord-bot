@@ -53,19 +53,19 @@ try:
     except:
         _print_debug("AXTN: Couldn't load Configuration in core.py")
         
-	try:
-		info={}
-		info['platform']=platform.system()
-		info['platform-release']=platform.release()
-		info['platform-version']=platform.version()
-		info['architecture']=platform.machine()
-		info['hostname']=socket.gethostname()
-		info['ip-address']=socket.gethostbyname(socket.gethostname())
-		info['mac-address']=':'.join(re.findall('..', '%012x' % uuid.getnode()))
-		info['processor']=platform.processor()
-		info['ram']=str(round(psutil.virtual_memory().total / (1024.0 **3)))+" GB"
-	except Exception as e:
-		_print_debug(e)
+    try:
+        info={}
+        info['platform']=platform.system()
+        info['platform-release']=platform.release()
+        info['platform-version']=platform.version()
+        info['architecture']=platform.machine()
+        info['hostname']=socket.gethostname()
+        info['ip-address']=socket.gethostbyname(socket.gethostname())
+        info['mac-address']=':'.join(re.findall('..', '%012x' % uuid.getnode()))
+        info['processor']=platform.processor()
+        info['ram']=str(round(psutil.virtual_memory().total / (1024.0 **3)))+" GB"
+    except Exception as e:
+        _print_debug(e)
 		
 	staff_channels = {
 		"staff-chat" : 967573966313107456,
