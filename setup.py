@@ -12,11 +12,9 @@ def _bot():
 
 def _quickstart_check():
     import json
-
     try:
         config_file = open('core/lib/_config.json')
         config = json.load(config_file)
-
         if config['quickstart']:
             print("AXTN: Quickstart Active")
             _bot()
@@ -30,8 +28,6 @@ if __name__=="__main__":
     try:
         _quickstart_check()
         _modules()
-        
     except KeyboardInterrupt:
         print(BColors.YELLOW + "\nProgram closed by user (CTRL+C)")
         exit()
-        

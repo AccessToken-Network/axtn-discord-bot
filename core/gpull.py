@@ -1,10 +1,9 @@
-import sys
 import os
 from time import sleep
 
 def gpull():
     os.system("git pull")
-    sleep(2)
+    sleep(3)
     print("Pull done!")
     
 def start_setup():

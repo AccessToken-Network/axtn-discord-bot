@@ -34,24 +34,24 @@ from lib._debug import _print_debug
 
 try:
     
-	_cls()
-	_cout(boot)
-	load_dotenv()
+    try:
+		_cls()
+		_cout(boot)
+		load_dotenv()
  
-	# declarings
-	intents = discord.Intents.all()
-	intents.typing = True
-	intents.presences = True
-	intents.members = True
-	intents.voice_states = True
-	Token = os.getenv('DISCORD_TOKEN')
-	prefix = '/'
-	bot = commands.Bot(command_prefix=prefix, intents=intents)
-	slash = SlashCommand(bot, sync_commands=True)
-	bot.remove_command("help")
-
-	_print_debug("AXTN: Configuration loaded")
-	_print_debug("AXTN: Awaiting Actions")
+		intents = discord.Intents.all()
+		intents.typing = True
+		intents.presences = True
+		intents.members = True
+		intents.voice_states = True
+		Token = os.getenv('DISCORD_TOKEN')
+		prefix = '/'
+		bot = commands.Bot(command_prefix=prefix, intents=intents)
+		slash = SlashCommand(bot, sync_commands=True)
+		bot.remove_command("help")
+		_print_debug("AXTN: Configuration loaded")
+	except:
+		_print_debug("AXTN: Couldn't load Configuration in core.py")
 
 	try:
 		info={}
@@ -65,7 +65,7 @@ try:
 		info['processor']=platform.processor()
 		info['ram']=str(round(psutil.virtual_memory().total / (1024.0 **3)))+" GB"
 	except Exception as e:
-		print(e)
+		_print_debug(e)
 		
 	staff_channels = {
 		"staff-chat" : 967573966313107456,
@@ -109,7 +109,7 @@ try:
 					f"Hostname      |			: [{info['hostname']}]\n"
 					f"Architecture  |			: [{info['architecture']}]\n"
 					f"-----------------------------------------\n"
-					f"/git pull - for updates\n"
+					f"/git pull\n"
                    	"```")
   
 		await bot.change_presence(activity=discord.Game(name=presence_name))
