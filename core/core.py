@@ -83,13 +83,6 @@ try:
 	user_channels = {
 		"chat" : 967529433433006173
 	}
-	
-	async def autobump(channel_disboard):
-		await asyncio.sleep(5)
-		await channel_disboard.send("/bump")
-		_print_debug("AXTN: /bump send in #Disboard, Timer now on 02:00 Hours!")
-		await asyncio.sleep(7200)
-
 
 	@bot.event
 	async def on_ready():
@@ -174,7 +167,10 @@ try:
 					_sys("python3 core/gpull.py")
 				elif message.content == "/init bump" or message.content == "/Init Bump":
 					channel_disboard = bot.get_channel(staff_channels["disboard"])
-					autobump(channel_disboard)
+					await asyncio.sleep(5)
+				await channel_disboard.send("/bump")
+				_print_debug("AXTN: /bump send in #Disboard, Timer now on 02:00 Hours!")
+				await asyncio.sleep(7200)
 	
 			elif message.channel.id == user_channels["chat"]:
 				if message.author.id == 250648489220898817 or message.author.id == 644590202030915594:
