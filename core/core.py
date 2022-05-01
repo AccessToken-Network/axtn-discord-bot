@@ -205,7 +205,7 @@ try:
 							channel_super_audit = bot.get_channel(staff_channels["super-audit"])
 							await channel_super_audit.send(f"{message.author.name}: {message.content}")
 		except Exception as exc:
-			_print_debug(exc)
+			_print_debug(f"Error: in {exc}")
 
 	bot.run(Token)
 
