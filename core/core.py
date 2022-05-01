@@ -109,7 +109,7 @@ try:
 					f"Hostname      |			: [{info['hostname']}]\n"
 					f"Architecture  |			: [{info['architecture']}]\n"
 					f"-----------------------------------------\n"
-					f"/git pull\n"
+					f"/git pull - test message\n"
                    	"```")
   
 		await bot.change_presence(activity=discord.Game(name=presence_name))
