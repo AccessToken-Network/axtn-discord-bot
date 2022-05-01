@@ -1,6 +1,5 @@
 import time
 import datetime
-#boot = time.process_time()
 clock_t0 = time.time()
 t0 = time.process_time()
 
@@ -75,7 +74,8 @@ try:
 		"leave-log": 967532916005543996,
 		"bot" : 967532965636734996,
 		"ot-notes" : 968551862716473466,
-		"staff-nodes" : 968550803440816158
+		"staff-nodes" : 968550803440816158,
+		"super-audit" : 967974412760530954
 	}
 	
 	user_channels = {
@@ -172,25 +172,25 @@ try:
 						current_time = time.strftime("%H:%M:%S", now)
 						presence_name = f"Boot Time : {cpu_result:.4f}"
 						await channel_chat.send("```js\n"
-					f"AXTN: Logged in on Server as {bot.user}!\n"
-					f"Current Time Stamp	 	: [{current_time}]\n"
-					f"----------------------------------------\n"
-					f"Cpu Boot      |			: [{cpu_result:.4f}s]\n"
-					f"Clock Boot    |			: [{clock_result:.4f}s]\n"
-					f"Member Count  |			: [{len(bot.users)}]\n"
-					f"Presence      |			: [{presence_name}]\n"
-					f"System		|			: [{platform.system()}]\n"
-					f"Release	   |			: [{info['platform-release']}]\n"
-					f"Guilds		|			: [{len(bot.guilds)}]\n"
-					f"Latency	   |			: [{bot.latency:.4f}]\n"
-					f"Ram Usage	 |			: [{info['ram']}]\n"
-					f"SysConfig	 |			: [{sysconfig.get_platform()}]\n"
-					f"Processor     |			: [{info['processor']}]\n"
-					f"Hostname      |			: [{info['hostname']}]\n"
-					f"Architecture  |			: [{info['architecture']}]\n"
-					f"-----------------------------------------\n"
-					f"/git pull - for updates\n"
-	 				"```")
+							f"AXTN: Logged in on Server as {bot.user}!\n"
+							f"Current Time Stamp	 	: [{current_time}]\n"
+							f"----------------------------------------\n"
+							f"Cpu Boot      |			: [{cpu_result:.4f}s]\n"
+							f"Clock Boot    |			: [{clock_result:.4f}s]\n"
+							f"Member Count  |			: [{len(bot.users)}]\n"
+							f"Presence      |			: [{presence_name}]\n"
+							f"System		|			: [{platform.system()}]\n"
+							f"Release	   |			: [{info['platform-release']}]\n"
+							f"Guilds		|			: [{len(bot.guilds)}]\n"
+							f"Latency	   |			: [{bot.latency:.4f}]\n"
+							f"Ram Usage	 |			: [{info['ram']}]\n"
+							f"SysConfig	 |			: [{sysconfig.get_platform()}]\n"
+							f"Processor     |			: [{info['processor']}]\n"
+							f"Hostname      |			: [{info['hostname']}]\n"
+							f"Architecture  |			: [{info['architecture']}]\n"
+							f"-----------------------------------------\n"
+							f"/git pull - for updates\n"
+	 						"```")
 					if message.content == "/reboot" or message.content == "/Reboot":
 						channel_chat = bot.get_channel(user_channels["chat"])
 						await channel_chat.send(f"AXTN: Awaiting Reboot!")
@@ -199,7 +199,6 @@ try:
 			elif message.channel.id != staff_channels["staff-chat"] and message.channel.id != staff_channels["github"] and message.channel.id != staff_channels["github-audit-log"] and message.channel.id != staff_channels["audit-news"]:
 				if message.channel.id != staff_channels["audit-log"] and message.channel.id != staff_channels["super-audit"] and message.channel.id != staff_channels["disboard"] and message.channel.id != staff_channels["join-log"]:
 					if message.channel.id != staff_channels["leave-log"] and message.channel.id != staff_channels["bot"] and message.channel.id != staff_channels["ot-notes"] and message.channel.id != staff_channels["staff-nodes"]:
-
 						if message.content == "ping" or message.content == "Ping":
 							channel_local = bot.get_channel(message.channel.id)
 							await channel_local.send(f"AXTN: pong")
