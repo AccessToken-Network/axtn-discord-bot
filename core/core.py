@@ -108,19 +108,25 @@ try:
 					f"Architecture  |			: [{info['architecture']}]\n"
 					f"-----------------------------------------\n"
 					f"/git pull - for updates\n"
-				   	"```")
+	 				"```")
 		
 		await bot.change_presence(activity=discord.Game(name=presence_name))
-		_print_debug(f"AXTN: Logged in on Server as {bot.user}!")
-		_print_debug(f"Current Time : [{current_time}]")
-		_print_debug(f"Boot Time : [{time.process_time() - boot}]")
-		_print_debug(f"Member Count : [{len(bot.users)}]")
-		_print_debug(f"Presence : [{presence_name}]")
-		_print_debug(f"System : [{platform.system()}]")
-		_print_debug(f"Guilds : [{len(bot.guilds)}]")
-		_print_debug(f"Latency : [{bot.latency}]")
-		_print_debug(f"Ram Usage : [{info['ram']} MB]")
-		_print_debug(f"SysConfig : [{sysconfig.get_platform()}]")
+		try:
+			_print_debug(f"AXTN: Logged in on Server as {bot.user}!")
+			_print_debug(f"Current Time : [{current_time}]")
+			_print_debug(f"Boot Time : [{time.process_time() - boot}]")
+			_print_debug(f"Member Count : [{len(bot.users)}]")
+			_print_debug(f"Presence : [{presence_name}]")
+			_print_debug(f"System : [{platform.system()}]")
+			_print_debug(f"Guilds : [{len(bot.guilds)}]")
+			_print_debug(f"Latency : [{bot.latency}]")
+			_print_debug(f"Ram Usage : [{info['ram']} MB]")
+			_print_debug(f"SysConfig : [{sysconfig.get_platform()}]")
+			_print_debug(f"Processor : [{info['processor']}]")
+			_print_debug(f"Hostname : [{info['hostname']}]")
+			_print_debug(f"Architecture : [{info['architecture']}]")
+		except:
+			_print_debug("AXTN: Couldn't load a string in axtn/info")
 
 	@bot.event
 	async def on_member_join(member):
@@ -136,70 +142,73 @@ try:
 
 	@bot.event
 	async def on_message(message):
-		if message.channel.id == staff_channels["bot"]:
-			if message.content == "/reboot" or message.content == "/Reboot":
-				channel_bot = bot.get_channel(staff_channels["bot"])
-				await channel_bot.send(f"AXTN: Awaiting Reboot!")
-				_print_debug(f"AXTN: Awaiting Reboot!")
-				_reboot()
-			elif message.content == "/exit" or message.content == "/close":
-				channel_bot = bot.get_channel(staff_channels["bot"])
-				await channel_bot.send(f"AXTN: Awaiting Shutdown!")
-				_print_debug(f"AXTN: Awaiting Shutdown!")
-				sys.exit()
-			elif message.content == "/git pull" or message.content == "/gpull":
-				channel_bot = bot.get_channel(staff_channels["bot"])
-				await channel_bot.send(f"AXTN: Pulling!")
-				_print_debug(f"AXTN: Pulling!")
-				_sys("python3 core/gpull.py")
-	
-		elif message.channel.id == user_channels["chat"]:
-			if message.author.id == 250648489220898817 or message.author.id == 644590202030915594:
-				if message.content == "axtn/info":
-					channel_chat = bot.get_channel(user_channels["chat"])
-					now = time.localtime()
-					current_time = time.strftime("%H:%M:%S", now)
-					presence_name = f"Boot Time : {(time.process_time() - boot):.4f}"
-					await channel_chat.send("```js\n"
-					f"AXTN: Logged in on Server as {bot.user}!\n"
-					f"Current Time Stamp	 	: [{current_time}]\n"
-					f"----------------------------------------\n"
-					f"Boot Time     |			: [{(time.process_time() - boot):.4f}]\n"
-					f"Member Count  |			: [{len(bot.users)}]\n"
-					f"Presence      |			: [{presence_name}]\n"
-					f"System		|			: [{platform.system()}]\n"
-					f"Release	   |			: [{info['platform-release']}]\n"
-					f"Guilds		|			: [{len(bot.guilds)}]\n"
-					f"Latency	   |			: [{bot.latency:.4f}]\n"
-					f"Ram Usage	 |			: [{info['ram']}]\n"
-					f"SysConfig	 |			: [{sysconfig.get_platform()}]\n"
-					f"Processor     |			: [{info['processor']}]\n"
-					f"Hostname      |			: [{info['hostname']}]\n"
-					f"Architecture  |			: [{info['architecture']}]\n"
-					f"-----------------------------------------\n"
-					f"/git pull - for updates\n"
-				   	"```")
+		try:
+			if message.channel.id == staff_channels["bot"]:
 				if message.content == "/reboot" or message.content == "/Reboot":
-					channel_chat = bot.get_channel(user_channels["chat"])
-					await channel_chat.send(f"AXTN: Awaiting Reboot!")
+					channel_bot = bot.get_channel(staff_channels["bot"])
+					await channel_bot.send(f"AXTN: Awaiting Reboot!")
 					_print_debug(f"AXTN: Awaiting Reboot!")
 					_reboot()
-	 
-		elif message.channel.id != staff_channels["staff-chat"] and message.channel.id != staff_channels["github"] and message.channel.id != staff_channels["github-audit-log"] and message.channel.id != staff_channels["audit-news"]:
-			if message.channel.id != staff_channels["audit-log"] and message.channel.id != staff_channels["super-audit"] and message.channel.id != staff_channels["disboard"] and message.channel.id != staff_channels["join-log"]:
-				if message.channel.id != staff_channels["leave-log"] and message.channel.id != staff_channels["bot"] and message.channel.id != staff_channels["ot-notes"] and message.channel.id != staff_channels["staff-nodes"]:
-					if message.content == "ping" or message.content == "Ping":
-						channel_local = bot.get_channel(message.channel.id)
-						await channel_local.send(f"AXTN: pong")
-					elif message.content == "pong" or message.content == "Pong":
-						channel_local = bot.get_channel(message.channel.id)
-						await channel_local.send(f"AXTN: ping")
-					else:
-						channel_super_audit = bot.get_channel(staff_channels["super-audit"])
-						await channel_super_audit.send(f"{message.author.name}: {message.content}")
-  
+				elif message.content == "/exit" or message.content == "/close":
+					channel_bot = bot.get_channel(staff_channels["bot"])
+					await channel_bot.send(f"AXTN: Awaiting Shutdown!")
+					_print_debug(f"AXTN: Awaiting Shutdown!")
+					sys.exit()
+				elif message.content == "/git pull" or message.content == "/gpull":
+					channel_bot = bot.get_channel(staff_channels["bot"])
+					await channel_bot.send(f"AXTN: Pulling!")
+					_print_debug(f"AXTN: Pulling!")
+					_sys("python3 core/gpull.py")
+	
+			elif message.channel.id == user_channels["chat"]:
+				if message.author.id == 250648489220898817 or message.author.id == 644590202030915594:
+					if message.content == "axtn/info":
+						channel_chat = bot.get_channel(user_channels["chat"])
+						now = time.localtime()
+						current_time = time.strftime("%H:%M:%S", now)
+						presence_name = f"Boot Time : {(time.process_time() - boot):.4f}"
+						await channel_chat.send("```js\n"
+						f"AXTN: Logged in on Server as {bot.user}!\n"
+						f"Current Time Stamp	 	: [{current_time}]\n"
+						f"----------------------------------------\n"
+						f"Boot Time     |			: [{(time.process_time() - boot):.4f}]\n"
+						f"Member Count  |			: [{len(bot.users)}]\n"
+						f"Presence      |			: [{presence_name}]\n"
+						f"System		|			: [{platform.system()}]\n"
+						f"Release	   |			: [{info['platform-release']}]\n"
+						f"Guilds		|			: [{len(bot.guilds)}]\n"
+						f"Latency	   |			: [{bot.latency:.4f}]\n"
+						f"Ram Usage	 |			: [{info['ram']}]\n"
+						f"SysConfig	 |			: [{sysconfig.get_platform()}]\n"
+						f"Processor     |			: [{info['processor']}]\n"
+						f"Hostname      |			: [{info['hostname']}]\n"
+						f"Architecture  |			: [{info['architecture']}]\n"
+						f"-----------------------------------------\n"
+						f"/git pull - for updates\n"
+				   		"```")
+					if message.content == "/reboot" or message.content == "/Reboot":
+						channel_chat = bot.get_channel(user_channels["chat"])
+						await channel_chat.send(f"AXTN: Awaiting Reboot!")
+						_print_debug(f"AXTN: Awaiting Reboot!")
+						_reboot()
+			elif message.channel.id != staff_channels["staff-chat"] and message.channel.id != staff_channels["github"] and message.channel.id != staff_channels["github-audit-log"] and message.channel.id != staff_channels["audit-news"]:
+				if message.channel.id != staff_channels["audit-log"] and message.channel.id != staff_channels["super-audit"] and message.channel.id != staff_channels["disboard"] and message.channel.id != staff_channels["join-log"]:
+					if message.channel.id != staff_channels["leave-log"] and message.channel.id != staff_channels["bot"] and message.channel.id != staff_channels["ot-notes"] and message.channel.id != staff_channels["staff-nodes"]:
+
+						if message.content == "ping" or message.content == "Ping":
+							channel_local = bot.get_channel(message.channel.id)
+							await channel_local.send(f"AXTN: pong")
+						elif message.content == "pong" or message.content == "Pong":
+							channel_local = bot.get_channel(message.channel.id)
+							await channel_local.send(f"AXTN: ping")
+						else:
+							channel_super_audit = bot.get_channel(staff_channels["super-audit"])
+							await channel_super_audit.send(f"{message.author.name}: {message.content}")
+		except Exception as exc:
+			_print_debug(exc)
+
 	bot.run(Token)
- 
+
 except KeyboardInterrupt:
 	print(BColors.YELLOW + "\nProgram closed by user ( CTRL+C )")
 	exit()
