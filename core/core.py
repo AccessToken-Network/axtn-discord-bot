@@ -10,9 +10,11 @@ import uuid
 import socket
 import psutil
 import dotenv
+import random
 import discord
 import asyncio
 import platform
+import importlib
 import sysconfig
 
 from time import sleep
@@ -26,6 +28,8 @@ from discord.ext.commands import Bot
 from discord_slash import SlashCommand, SlashContext
 from discord_slash.utils.manage_commands import create_choice, create_option
 
+from Notes import Notes
+from helpers import getPath
 from lib._sys import _sys
 from lib._cls import _cls
 from lib._cout import _cout
@@ -45,7 +49,7 @@ try:
 	intents.members = True
 	intents.voice_states = True
 	Token = os.getenv('DISCORD_TOKEN')
-	prefix = '/'
+	prefix = '!'
 	bot = commands.Bot(command_prefix=prefix, intents=intents)
 	slash = SlashCommand(bot, sync_commands=True)
 	bot.remove_command("help")
@@ -134,6 +138,111 @@ try:
 		except:
 			_print_debug("AXTN: Couldn't load a string in axtn/info")
 
+	@bot.command()
+	async def help(ctx):
+		await ctx.send("```py\n"
+			"Notes System:\n"
+			"\n"
+			"  !notes                      - show list\n"
+			"  !note <name>                - read note\n"
+			"  !writenote <name> <content> - write <content> to note <name>, replacing.\n"
+			"  !deletenote <name>          - delete note\n"
+			"\n"
+			"```")
+
+	@bot.command()
+	async def notes(ctx):
+	# TODO: Make this an embed so commands to read each note can be embedded in
+	#       notes names (not sure that's possible)
+
+		notes = Notes(getPath(ctx)).getAll()
+		if notes:
+			message = "Here are the notes available to read:\n\n"
+			for name in notes.keys():
+				message += f"* {name}\n"
+
+			message += "\nUse `!note <name>` to read a note!"
+		else:
+			message = "There are no notes! You can add one with `!writenote <name> <content>`."
+
+		await ctx.send(message)
+
+	# TODO: multiple aliases for this command (readnote, getnote)
+
+	@bot.command()
+	async def note(ctx, name):
+		name = name.lower().replace(" ", "-")
+		content = Notes(getPath(ctx)).get(name)
+		if content:
+			message = content
+		else:
+			message = f"Note “{name}” does not exist.\nUse `!notes` to get a list of available notes."
+
+		await ctx.send(message)
+
+
+	@note.error
+	async def note_error(ctx, error):
+		await ctx.send("Usage: `!note <name>`\nUse `!notes` to get a list of available notes.")
+
+	# TODO: multiple ali	ases for this command (addnote, createnote, newnote?)
+	@bot.command()
+	async def writenote(ctx, *, args):
+		try:
+			(name, content) = args.split(maxsplit=1)
+		except ValueError:
+			await ctx.send("You must provide a content for the note.\nUsage: `!writenote <name> <content>`")
+			return
+
+		if not name.replace("-", "").replace("_", "").isalpha():
+			await ctx.send("Note name can only contain letters, “-” and “_”.")
+			return
+
+		name = name.lower().replace(" ", "-")
+		content = content.strip()
+		if len(name) > 30:
+			await ctx.send("Note name cannot exceed 30 characters.")
+			return
+
+		# Write notes to file
+		notes = Notes(getPath(ctx))
+		notes.write(name, content)
+		print(
+			f"Wrote note “{name}” on server “{ctx.guild.name}” ({ctx.guild.id}): {content}")
+
+		await ctx.send(f"Successfully wrote note “{name}”, use `!note {name}` to read it!")
+
+
+	@writenote.error
+	async def writenote_error(ctx, error):
+		print(f"Error on !writenote: {error}")
+		await ctx.send("Usage: `!writenote <name> <content>`")
+
+
+	@bot.command()
+	async def deletenote(ctx, name):
+		name = name.lower().replace(" ", "-")
+		notes = Notes(getPath(ctx))
+
+		if not name.replace("-", "").replace("_", "").isalpha():
+			await ctx.send("Note name can only contain letters, “-” and “_”.")
+			return
+
+		if notes.delete(name):
+			message = f"Note “{name}” successfully deleted!"
+			print(
+				f"Deleted note “{name}” on server “{ctx.guild.name}” ({ctx.guild.id})")
+		else:
+			message = f"Note {name} does not exist.\nUse `!notes to get a list of available notes."
+
+		await ctx.send(message)
+
+
+	@deletenote.error
+	async def deletenote_error(ctx, error):
+		print(f"Error on !deletenote: {error}")
+		await ctx.send("Usage: `!deletenote <name>`\nUse `!notes` to get a list of available notes.")
+
 	@bot.event
 	async def on_member_join(member):
 		channel_bot = bot.get_channel(967532895067590678)
@@ -216,6 +325,8 @@ try:
 							await channel_super_audit.send(f"{message.author.name}: {message.content}")
 		except Exception as exc:
 			_print_debug(f"Error: in {exc}")
+
+		await bot.process_commands(message)
 
 	bot.run(Token)
 

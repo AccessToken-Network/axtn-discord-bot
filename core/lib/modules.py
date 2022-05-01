@@ -1,3 +1,5 @@
+#needs a complete revamp
+
 import sys
 _sys = lambda sys_str : os.system(sys_str)
 from _colors import BColors
