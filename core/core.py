@@ -191,7 +191,7 @@ try:
 	async def note_error(ctx, error):
 		await ctx.send("Usage: `!note <name>`\nUse `!notes` to get a list of available notes.")
 
-	# TODO: multiple ali	ases for this command (addnote, createnote, newnote?)
+	# TODO: multiple aliases for this command (addnote, createnote, newnote?)
 	@bot.command()
 	async def writenote(ctx, *, args):
 		if ctx.message.author.id == admin_list["daemon"] or ctx.message.author.id == admin_list["exodus"]:
