@@ -165,9 +165,10 @@ try:
 			notes = Notes(getPath(ctx)).getAll()
 			if notes:
 				message = "Here are the notes available to read:\n\n"
+				i = 0
 				for name in notes.keys():
-					# message += f"```js* {name}\n"
-					message += f"- {name} \n"
+					i += 1
+					message += f" {i} - {name} \n"
 
 				message += "\nUse `!note <name>` to read a note!"
 			else:
