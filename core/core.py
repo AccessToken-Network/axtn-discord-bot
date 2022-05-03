@@ -157,20 +157,25 @@ try:
 	@bot.command()
 	async def notes(ctx):
 		if ctx.message.author.id == admin_list["daemon"] or ctx.message.author.id == admin_list["exodus"]:
-		# TODO: Make this an embed so commands to read each note can be embedded in
+    
+		# TODO: Currently working on it! Make this an embed so commands to read each note can be embedded in
 		#      	notes names (not sure that's possible)
+		# TODO: Make it numerical sort out!
 
 			notes = Notes(getPath(ctx)).getAll()
 			if notes:
 				message = "Here are the notes available to read:\n\n"
 				for name in notes.keys():
-					message += f"* {name}\n"
+					# message += f"```js* {name}\n"
+					message += f"- {name} \n"
 
 				message += "\nUse `!note <name>` to read a note!"
 			else:
 				message = "There are no notes! You can add one with `!writenote <name> <content>`."
-
-			await ctx.send(message)
+			#message
+			await ctx.send("```js\n" 
+							f"{message}"
+							"```")
 
 	# TODO: multiple aliases for this command (readnote, getnote)
 
