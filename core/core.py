@@ -158,9 +158,9 @@ try:
 	async def notes(ctx):
 		if ctx.message.author.id == admin_list["daemon"] or ctx.message.author.id == admin_list["exodus"]:
     
-		# TODO: Currently working on it! Make this an embed so commands to read each note can be embedded in
+		# TODO: Done! Make this an embed so commands to read each note can be embedded in
 		#      	notes names (not sure that's possible)
-		# TODO: Make it numerical sort out!
+		# TODO: Done!" Numerical Order"
 
 			notes = Notes(getPath(ctx)).getAll()
 			if notes:
