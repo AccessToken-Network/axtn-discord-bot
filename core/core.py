@@ -88,6 +88,10 @@ try:
 		"chat" : 967529433433006173
 	}
 
+	admin_list = {}
+	admin_list["daemon"] = 250648489220898817
+	admin_list["exodus"] = 644590202030915594
+
 	@bot.event
 	async def on_ready():
 		channel_bot = bot.get_channel(967532965636734996)
@@ -152,33 +156,35 @@ try:
 
 	@bot.command()
 	async def notes(ctx):
-	# TODO: Make this an embed so commands to read each note can be embedded in
-	#       notes names (not sure that's possible)
+		if ctx.message.author.id == admin_list["daemon"] or ctx.message.author.id == admin_list["exodus"]:
+		# TODO: Make this an embed so commands to read each note can be embedded in
+		#      	notes names (not sure that's possible)
 
-		notes = Notes(getPath(ctx)).getAll()
-		if notes:
-			message = "Here are the notes available to read:\n\n"
-			for name in notes.keys():
-				message += f"* {name}\n"
+			notes = Notes(getPath(ctx)).getAll()
+			if notes:
+				message = "Here are the notes available to read:\n\n"
+				for name in notes.keys():
+					message += f"* {name}\n"
 
-			message += "\nUse `!note <name>` to read a note!"
-		else:
-			message = "There are no notes! You can add one with `!writenote <name> <content>`."
+				message += "\nUse `!note <name>` to read a note!"
+			else:
+				message = "There are no notes! You can add one with `!writenote <name> <content>`."
 
-		await ctx.send(message)
+			await ctx.send(message)
 
 	# TODO: multiple aliases for this command (readnote, getnote)
 
 	@bot.command()
 	async def note(ctx, name):
-		name = name.lower().replace(" ", "-")
-		content = Notes(getPath(ctx)).get(name)
-		if content:
-			message = content
-		else:
-			message = f"Note “{name}” does not exist.\nUse `!notes` to get a list of available notes."
+		if ctx.message.author.id == admin_list["daemon"] or ctx.message.author.id == admin_list["exodus"]:
+			name = name.lower().replace(" ", "-")
+			content = Notes(getPath(ctx)).get(name)
+			if content:
+				message = content
+			else:
+				message = f"Note “{name}” does not exist.\nUse `!notes` to get a list of available notes."
 
-		await ctx.send(message)
+			await ctx.send(message)
 
 
 	@note.error
@@ -188,29 +194,29 @@ try:
 	# TODO: multiple ali	ases for this command (addnote, createnote, newnote?)
 	@bot.command()
 	async def writenote(ctx, *, args):
-		try:
-			(name, content) = args.split(maxsplit=1)
-		except ValueError:
-			await ctx.send("You must provide a content for the note.\nUsage: `!writenote <name> <content>`")
-			return
+		if ctx.message.author.id == admin_list["daemon"] or ctx.message.author.id == admin_list["exodus"]:
+			try:
+				(name, content) = args.split(maxsplit=1)
+			except ValueError:
+				await ctx.send("You must provide a content for the note.\nUsage: `!writenote <name> <content>`")
+				return
 
-		if not name.replace("-", "").replace("_", "").isalpha():
-			await ctx.send("Note name can only contain letters, “-” and “_”.")
-			return
+			if not name.replace("-", "").replace("_", "").isalpha():
+				await ctx.send("Note name can only contain letters, “-” and “_”.")
+				return
 
-		name = name.lower().replace(" ", "-")
-		content = content.strip()
-		if len(name) > 30:
-			await ctx.send("Note name cannot exceed 30 characters.")
-			return
+			name = name.lower().replace(" ", "-")
+			content = content.strip()
+			if len(name) > 30:
+				await ctx.send("Note name cannot exceed 30 characters.")
+				return
 
-		# Write notes to file
-		notes = Notes(getPath(ctx))
-		notes.write(name, content)
-		print(
-			f"Wrote note “{name}” on server “{ctx.guild.name}” ({ctx.guild.id}): {content}")
+			# Write notes to file
+			notes = Notes(getPath(ctx))
+			notes.write(name, content)
+			print(f"Wrote note “{name}” on server “{ctx.guild.name}” ({ctx.guild.id}): {content}")
 
-		await ctx.send(f"Successfully wrote note “{name}”, use `!note {name}` to read it!")
+			await ctx.send(f"Successfully wrote note “{name}”, use `!note {name}` to read it!")
 
 
 	@writenote.error
@@ -221,21 +227,21 @@ try:
 
 	@bot.command()
 	async def deletenote(ctx, name):
-		name = name.lower().replace(" ", "-")
-		notes = Notes(getPath(ctx))
+		if ctx.message.author.id == admin_list["daemon"] or ctx.message.author.id == admin_list["exodus"]:
+			name = name.lower().replace(" ", "-")
+			notes = Notes(getPath(ctx))
 
-		if not name.replace("-", "").replace("_", "").isalpha():
-			await ctx.send("Note name can only contain letters, “-” and “_”.")
-			return
+			if not name.replace("-", "").replace("_", "").isalpha():
+				await ctx.send("Note name can only contain letters, “-” and “_”.")
+				return
 
-		if notes.delete(name):
-			message = f"Note “{name}” successfully deleted!"
-			print(
-				f"Deleted note “{name}” on server “{ctx.guild.name}” ({ctx.guild.id})")
-		else:
-			message = f"Note {name} does not exist.\nUse `!notes to get a list of available notes."
+			if notes.delete(name):
+				message = f"Note “{name}” successfully deleted!"
+				print(f"Deleted note “{name}” on server “{ctx.guild.name}” ({ctx.guild.id})")
+			else:
+				message = f"Note {name} does not exist.\nUse `!notes to get a list of available notes."
 
-		await ctx.send(message)
+			await ctx.send(message)
 
 
 	@deletenote.error
