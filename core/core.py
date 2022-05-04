@@ -186,11 +186,15 @@ try:
 			name = name.lower().replace(" ", "-")
 			content = Notes(getPath(ctx)).get(name)
 			if content:
+				#content = content of message
 				message = content
 			else:
 				message = f"Note “{name}” does not exist.\nUse `!notes` to get a list of available notes."
-
-			await ctx.send(message)
+			#message = content
+			await ctx.send("```js\n"
+							f"{name}: \n"
+							f"{message}"
+							"```")
 
 
 	@note.error
