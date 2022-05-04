@@ -38,17 +38,20 @@ from lib._timestamp import *
 from lib._colors import BColors
 from lib._debug import _print_debug
 
+print(f"Successfully all imports imported")
+
 try:
 	_cls()
-	print(f'Clock-t0: {clock_t0}, CPU-t0: {t0}')
 	load_dotenv()
+	Token = os.getenv('DISCORD_TOKEN')
+	
+	print(f'Clock-t0: {clock_t0}, CPU-t0: {t0}')
 		
 	intents = discord.Intents.all()
 	intents.typing = True
 	intents.presences = True
 	intents.members = True
 	intents.voice_states = True
-	Token = os.getenv('DISCORD_TOKEN')
 	prefix = '!'
 	bot = commands.Bot(command_prefix=prefix, intents=intents)
 	slash = SlashCommand(bot, sync_commands=True)
@@ -66,9 +69,11 @@ try:
 		info['mac-address']=':'.join(re.findall('..', '%012x' % uuid.getnode()))
 		info['processor']=platform.processor()
 		info['ram']=psutil.virtual_memory().percent
+		print(f"System Info Loaded")
 	except Exception as e:
 		_print_debug(e)
-			
+
+	# -START- Categorizing ID's
 	staff_channels = {
 		"staff-chat" : 967573966313107456,
 		"github" : 967575140701442088,
@@ -83,18 +88,24 @@ try:
 		"super-audit" : 967974412760530954,
 		"disboard" : 967617421726863421
 	}
-	
-	user_channels = {
-		"chat" : 967529433433006173
-	}
+
+	guild_ids = {}
+	guild_ids["axtn"] = 967529432745132082
+
+	user_channels = {}
+	user_channels["chat"] = 967529433433006173
 
 	admin_list = {}
 	admin_list["daemon"] = 250648489220898817
 	admin_list["exodus"] = 644590202030915594
 
+	# -END- Categorizing ID's
+	# -START- Core Event Handling
+
 	@bot.event
 	async def on_ready():
-		channel_bot = bot.get_channel(967532965636734996)
+		print(f"@bot.event on_ready() triggered!")
+		channel_bot = bot.get_channel(staff_channels["bot"])
 		now = time.localtime()
 		current_time = time.strftime("%H:%M:%S", now)
 		t1 = time.process_time()
@@ -121,7 +132,7 @@ try:
 					f"Architecture  |			: [{info['architecture']}]\n"
 					f"-----------------------------------------\n"
 					f"/git pull - for updates\n"
-	 				"```")
+					"```")
 		
 		await bot.change_presence(activity=discord.Game(name=presence_name))
 		try:
@@ -144,6 +155,7 @@ try:
 
 	@bot.command()
 	async def help(ctx):
+		print(f"@bot.command help() triggered!")
 		await ctx.send("```py\n"
 			"Notes System:\n"
 			"\n"
@@ -298,7 +310,7 @@ try:
 					await asyncio.sleep(7200)
 	
 			elif message.channel.id == user_channels["chat"]:
-				if message.author.id == 250648489220898817 or message.author.id == 644590202030915594:
+				if message.author.id == admin_list["daemon"] or message.author.id == admin_list["exodus"]:
 					if message.content == "axtn/info":
 						channel_chat = bot.get_channel(user_channels["chat"])
 						now = time.localtime()
@@ -323,7 +335,7 @@ try:
 							f"Architecture  |			: [{info['architecture']}]\n"
 							f"-----------------------------------------\n"
 							f"/git pull - for updates\n"
-	 						"```")
+							"```")
 					if message.content == "/reboot" or message.content == "/Reboot":
 						channel_chat = bot.get_channel(user_channels["chat"])
 						await channel_chat.send(f"AXTN: Awaiting Reboot!")
@@ -343,6 +355,8 @@ try:
 			_print_debug(f"Error: in {exc}")
 
 		await bot.process_commands(message)
+
+	# -END- Core Event Handling
 
 	bot.run(Token)
 

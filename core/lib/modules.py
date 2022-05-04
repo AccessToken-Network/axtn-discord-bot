@@ -8,18 +8,29 @@ def _osn(sys_str):
     if  os.name == "nt":
         _sys(sys_str)
     else:
-        _sys("python3 -m ".format(sys_str))
+        _sys("python3 -m {}".format(sys_str))
 
 try:
     import os
     from time import sleep
-except ModuleNotFoundError:
-    print('Python3 missing default modules!')
+except ModuleNotFoundError as e:
+    print(f'Python3 missing default modules! \n {e}')
 
 def _modules():
     try:
+        import os
+        import re
+        import sys
+        import uuid
+        import socket
+        import psutil
         import dotenv
+        import random
         import discord
+        import asyncio
+        import platform
+        import importlib
+        import sysconfig
         from time import sleep
         from dotenv import load_dotenv
         from discord.utils import get
@@ -32,8 +43,19 @@ def _modules():
             _osn("pip install discord.py")
             _osn("pip install python-dotenv")
             
+            import os
+            import re
+            import sys
+            import uuid
+            import socket
+            import psutil
             import dotenv
+            import random
             import discord
+            import asyncio
+            import platform
+            import importlib
+            import sysconfig
             from time import sleep
             from dotenv import load_dotenv
             from discord.utils import get
