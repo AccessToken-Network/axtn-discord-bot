@@ -1,6 +1,6 @@
 # AXTN Discord Bot
 
-Project Description
+A Discord Bot for the official server of AXTN Network. Only made for private Hosting.
 
 ## Live Version
 
