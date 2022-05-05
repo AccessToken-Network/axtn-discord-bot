@@ -33,7 +33,7 @@ The full license terms may be viewed in the [LICENSE.md file](./LICENSE.md)
 
 ## Contact
 
-We may be contacted through email at `team@accesstoken.network` or via the discord server [Server](https://discord.gg/eJb9NgGTg7).
+We may be contacted through email at `team@accesstoken.network` or via the Discord [Server](https://discord.gg/eJb9NgGTg7).
 
 ## Changes
 
