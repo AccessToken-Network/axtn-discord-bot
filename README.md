@@ -13,6 +13,7 @@ There's no website deployed currently!
 ## Feedback and Bugs
 
 If you have feedback or a bug report, please feel free to open a GitHub issue!
+
 [![Build Status](https://img.shields.io/github/issues/le3ch-tech/cryptic-discord-bot?label=Issues)](https://github.com/AccessToken-Network/axtn-discord-bot/issues)
 
 ## Contributing
